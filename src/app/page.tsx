@@ -13,30 +13,42 @@ import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-[#F8F6F1] text-[#1D1D1B]">
+    <main id="top" className="min-h-screen">
 
+      {/* Navigation */}
       <Navbar />
 
+      {/* Main Hero */}
       <Hero />
 
+      {/* Why Nirmaan */}
       <WhyNirmaan />
 
+      {/* Choose Your Path */}
       <Paths />
 
+      {/* Nirmaan Journey */}
       <HowItWorks />
 
+      {/* Learning & Upskilling */}
       <Learning />
 
+      {/* Mentorship */}
       <Mentorship />
 
+      {/* Career Readiness */}
       <Career />
 
+      {/* Entrepreneurship */}
       <Ventures />
 
+      {/* Participant Stories */}
       <Stories />
 
+      {/* Final Call To Action */}
       <CTA />
 
+      {/* Footer */}
       <Footer />
 
     </main>
