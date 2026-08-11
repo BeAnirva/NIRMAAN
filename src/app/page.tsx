@@ -16,6 +16,8 @@ export default function Home() {
       {/* Hero */}
       <Hero />
 
+      <AboutNirmaan />
+
       {/* What you can do with Nirmaan */}
       <Paths />
 
