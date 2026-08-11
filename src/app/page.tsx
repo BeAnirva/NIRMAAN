@@ -1,5 +1,6 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
+import AboutNirmaan from "@/components/AboutNirmaan";
 import Paths from "@/components/Paths";
 import HowItWorks from "@/components/HowItWorks";
 import CTA from "@/components/CTA";
