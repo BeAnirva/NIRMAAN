@@ -125,6 +125,16 @@ export default function Navbar() {
             Stories
           </a>
 
+
+          {/* FAQ */}
+
+          <a
+            href="/faq"
+            className="text-sm text-black/65 transition hover:text-black"
+          >
+            FAQ
+          </a>
+
         </div>
 
 
@@ -267,6 +277,17 @@ export default function Navbar() {
               className="text-base text-black/70"
             >
               Stories
+            </a>
+
+
+            {/* FAQ */}
+
+            <a
+              href="/faq"
+              onClick={() => setMenuOpen(false)}
+              className="text-base text-black/70"
+            >
+              FAQ
             </a>
 
 
