@@ -4,6 +4,7 @@ import { useState } from "react";
 
 export default function RegisterPage() {
   const [step, setStep] = useState(1);
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
   const [formData, setFormData] = useState({
     name: "",
@@ -21,26 +22,157 @@ export default function RegisterPage() {
       ...previous,
       [field]: value,
     }));
+
+    // Remove error as soon as user starts correcting the field
+    setErrors((previous) => ({
+      ...previous,
+      [field]: "",
+    }));
   };
 
+  // =========================
+  // STEP 1 VALIDATION
+  // =========================
+
+  const validateStep1 = () => {
+    const newErrors: Record<string, string> = {};
+
+    if (!formData.name.trim()) {
+      newErrors.name = "Please enter your full name.";
+    }
+
+    if (!formData.age) {
+      newErrors.age = "Please enter your age.";
+    } else {
+      const age = Number(formData.age);
+
+      if (age < 13 || age > 100) {
+        newErrors.age = "Please enter a valid age.";
+      }
+    }
+
+    if (!formData.mobile) {
+      newErrors.mobile = "Please enter your mobile number.";
+    } else if (!/^\d{10}$/.test(formData.mobile)) {
+      newErrors.mobile = "Mobile number must contain exactly 10 digits.";
+    }
+
+    if (!formData.email.trim()) {
+      newErrors.email = "Please enter your email address.";
+    } else if (
+      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)
+    ) {
+      newErrors.email = "Please enter a valid email address.";
+    }
+
+    if (!formData.city.trim()) {
+      newErrors.city = "Please enter your city.";
+    }
+
+    setErrors(newErrors);
+
+    return Object.keys(newErrors).length === 0;
+  };
+
+  // =========================
+  // STEP 2 VALIDATION
+  // =========================
+
+  const validateStep2 = () => {
+    const newErrors: Record<string, string> = {};
+
+    if (!formData.currentStatus) {
+      newErrors.currentStatus = "Please select where you are right now.";
+    }
+
+    if (!formData.interests.trim()) {
+      newErrors.interests = "Please tell us a little about your interests.";
+    }
+
+    setErrors(newErrors);
+
+    return Object.keys(newErrors).length === 0;
+  };
+
+  // =========================
+  // STEP 3 VALIDATION
+  // =========================
+
+  const validateStep3 = () => {
+    const newErrors: Record<string, string> = {};
+
+    if (!formData.goal.trim()) {
+      newErrors.goal = "Please tell us what you would like to achieve.";
+    }
+
+    setErrors(newErrors);
+
+    return Object.keys(newErrors).length === 0;
+  };
+
+  // =========================
+  // NEXT STEP
+  // =========================
+
   const nextStep = () => {
-    if (step < 3) {
+    let isValid = false;
+
+    if (step === 1) {
+      isValid = validateStep1();
+    }
+
+    if (step === 2) {
+      isValid = validateStep2();
+    }
+
+    if (isValid && step < 3) {
       setStep(step + 1);
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
     }
   };
+
+  // =========================
+  // PREVIOUS STEP
+  // =========================
 
   const previousStep = () => {
     if (step > 1) {
+      setErrors({});
       setStep(step - 1);
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
     }
+  };
+
+  // =========================
+  // COMPLETE REGISTRATION
+  // =========================
+
+  const completeRegistration = () => {
+    if (!validateStep3()) {
+      return;
+    }
+
+    console.log("Registration data:", formData);
+
+    alert("Registration details are valid!");
   };
 
   return (
     <main className="min-h-screen bg-[#F8F6F1]">
 
-      {/* NAVIGATION */}
+      {/* =========================
+          NAVIGATION
+      ========================= */}
 
       <header className="border-b border-black/5 bg-[#F8F6F1]/90">
+
         <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 md:px-10 lg:px-12">
 
           <a href="/" className="group">
@@ -63,10 +195,13 @@ export default function RegisterPage() {
           </a>
 
         </nav>
+
       </header>
 
 
-      {/* MAIN */}
+      {/* =========================
+          MAIN
+      ========================= */}
 
       <div className="mx-auto max-w-3xl px-6 py-16 md:px-10 md:py-24">
 
@@ -94,7 +229,9 @@ export default function RegisterPage() {
         </div>
 
 
-        {/* PROGRESS */}
+        {/* =========================
+            PROGRESS
+        ========================= */}
 
         <div className="mb-12">
 
@@ -118,9 +255,7 @@ export default function RegisterPage() {
           <div className="mt-3 flex justify-between text-xs text-black/35">
 
             <span>About You</span>
-
             <span>Your Direction</span>
-
             <span>Your Goals</span>
 
           </div>
@@ -128,11 +263,16 @@ export default function RegisterPage() {
         </div>
 
 
-        {/* FORM CARD */}
+        {/* =========================
+            FORM CARD
+        ========================= */}
 
         <div className="rounded-[2rem] border border-black/5 bg-white p-7 shadow-sm md:p-10">
 
-          {/* STEP 1 */}
+
+          {/* =========================
+              STEP 1
+          ========================= */}
 
           {step === 1 && (
 
@@ -146,7 +286,9 @@ export default function RegisterPage() {
                 Tell us about yourself
               </h2>
 
+
               <div className="mt-8 space-y-6">
+
 
                 {/* NAME */}
 
@@ -163,8 +305,18 @@ export default function RegisterPage() {
                       updateField("name", e.target.value)
                     }
                     placeholder="Your full name"
-                    className="w-full rounded-xl border border-black/10 bg-[#F8F6F1] px-4 py-4 text-sm outline-none transition focus:border-black/30"
+                    className={`w-full rounded-xl border bg-[#F8F6F1] px-4 py-4 text-sm outline-none transition ${
+                      errors.name
+                        ? "border-red-400"
+                        : "border-black/10 focus:border-black/30"
+                    }`}
                   />
+
+                  {errors.name && (
+                    <p className="mt-2 text-xs text-red-500">
+                      {errors.name}
+                    </p>
+                  )}
 
                 </div>
 
@@ -178,14 +330,28 @@ export default function RegisterPage() {
                   </label>
 
                   <input
-                    type="number"
+                    type="text"
+                    inputMode="numeric"
+                    pattern="[0-9]*"
                     value={formData.age}
-                    onChange={(e) =>
-                      updateField("age", e.target.value)
-                    }
+                    onChange={(e) => {
+                      const value = e.target.value.replace(/\D/g, "");
+
+                      updateField("age", value);
+                    }}
                     placeholder="Your age"
-                    className="w-full rounded-xl border border-black/10 bg-[#F8F6F1] px-4 py-4 text-sm outline-none transition focus:border-black/30"
+                    className={`w-full rounded-xl border bg-[#F8F6F1] px-4 py-4 text-sm outline-none transition ${
+                      errors.age
+                        ? "border-red-400"
+                        : "border-black/10 focus:border-black/30"
+                    }`}
                   />
+
+                  {errors.age && (
+                    <p className="mt-2 text-xs text-red-500">
+                      {errors.age}
+                    </p>
+                  )}
 
                 </div>
 
@@ -200,13 +366,28 @@ export default function RegisterPage() {
 
                   <input
                     type="tel"
+                    inputMode="numeric"
+                    pattern="[0-9]*"
+                    maxLength={10}
                     value={formData.mobile}
-                    onChange={(e) =>
-                      updateField("mobile", e.target.value)
-                    }
-                    placeholder="Your mobile number"
-                    className="w-full rounded-xl border border-black/10 bg-[#F8F6F1] px-4 py-4 text-sm outline-none transition focus:border-black/30"
+                    onChange={(e) => {
+                      const value = e.target.value.replace(/\D/g, "");
+
+                      updateField("mobile", value);
+                    }}
+                    placeholder="10-digit mobile number"
+                    className={`w-full rounded-xl border bg-[#F8F6F1] px-4 py-4 text-sm outline-none transition ${
+                      errors.mobile
+                        ? "border-red-400"
+                        : "border-black/10 focus:border-black/30"
+                    }`}
                   />
+
+                  {errors.mobile && (
+                    <p className="mt-2 text-xs text-red-500">
+                      {errors.mobile}
+                    </p>
+                  )}
 
                 </div>
 
@@ -226,8 +407,18 @@ export default function RegisterPage() {
                       updateField("email", e.target.value)
                     }
                     placeholder="you@example.com"
-                    className="w-full rounded-xl border border-black/10 bg-[#F8F6F1] px-4 py-4 text-sm outline-none transition focus:border-black/30"
+                    className={`w-full rounded-xl border bg-[#F8F6F1] px-4 py-4 text-sm outline-none transition ${
+                      errors.email
+                        ? "border-red-400"
+                        : "border-black/10 focus:border-black/30"
+                    }`}
                   />
+
+                  {errors.email && (
+                    <p className="mt-2 text-xs text-red-500">
+                      {errors.email}
+                    </p>
+                  )}
 
                 </div>
 
@@ -247,8 +438,18 @@ export default function RegisterPage() {
                       updateField("city", e.target.value)
                     }
                     placeholder="Where are you based?"
-                    className="w-full rounded-xl border border-black/10 bg-[#F8F6F1] px-4 py-4 text-sm outline-none transition focus:border-black/30"
+                    className={`w-full rounded-xl border bg-[#F8F6F1] px-4 py-4 text-sm outline-none transition ${
+                      errors.city
+                        ? "border-red-400"
+                        : "border-black/10 focus:border-black/30"
+                    }`}
                   />
+
+                  {errors.city && (
+                    <p className="mt-2 text-xs text-red-500">
+                      {errors.city}
+                    </p>
+                  )}
 
                 </div>
 
@@ -259,7 +460,9 @@ export default function RegisterPage() {
           )}
 
 
-          {/* STEP 2 */}
+          {/* =========================
+              STEP 2
+          ========================= */}
 
           {step === 2 && (
 
@@ -307,6 +510,14 @@ export default function RegisterPage() {
 
               </div>
 
+              {errors.currentStatus && (
+                <p className="mt-2 text-xs text-red-500">
+                  {errors.currentStatus}
+                </p>
+              )}
+
+
+              {/* INTERESTS */}
 
               <div className="mt-10">
 
@@ -321,8 +532,18 @@ export default function RegisterPage() {
                   }
                   placeholder="Tell us about your interests, skills or things you'd like to learn..."
                   rows={5}
-                  className="w-full resize-none rounded-xl border border-black/10 bg-[#F8F6F1] px-4 py-4 text-sm outline-none transition focus:border-black/30"
+                  className={`w-full resize-none rounded-xl border bg-[#F8F6F1] px-4 py-4 text-sm outline-none transition ${
+                    errors.interests
+                      ? "border-red-400"
+                      : "border-black/10 focus:border-black/30"
+                  }`}
                 />
+
+                {errors.interests && (
+                  <p className="mt-2 text-xs text-red-500">
+                    {errors.interests}
+                  </p>
+                )}
 
               </div>
 
@@ -331,7 +552,9 @@ export default function RegisterPage() {
           )}
 
 
-          {/* STEP 3 */}
+          {/* =========================
+              STEP 3
+          ========================= */}
 
           {step === 3 && (
 
@@ -364,8 +587,18 @@ export default function RegisterPage() {
                   }
                   placeholder="For example: get a job, learn a new skill, start a business, become financially independent..."
                   rows={7}
-                  className="w-full resize-none rounded-xl border border-black/10 bg-[#F8F6F1] px-4 py-4 text-sm outline-none transition focus:border-black/30"
+                  className={`w-full resize-none rounded-xl border bg-[#F8F6F1] px-4 py-4 text-sm outline-none transition ${
+                    errors.goal
+                      ? "border-red-400"
+                      : "border-black/10 focus:border-black/30"
+                  }`}
                 />
+
+                {errors.goal && (
+                  <p className="mt-2 text-xs text-red-500">
+                    {errors.goal}
+                  </p>
+                )}
 
               </div>
 
@@ -373,11 +606,14 @@ export default function RegisterPage() {
               <div className="mt-7 rounded-xl bg-[#E9E4DA] p-5">
 
                 <p className="text-sm leading-6 text-black/60">
+
                   <span className="font-medium text-black">
                     Remember:
                   </span>{" "}
+
                   You don't need to know exactly where you're going.
                   Nirmaan is here to help you figure out the next step.
+
                 </p>
 
               </div>
@@ -387,7 +623,9 @@ export default function RegisterPage() {
           )}
 
 
-          {/* NAVIGATION */}
+          {/* =========================
+              NAVIGATION
+          ========================= */}
 
           <div className="mt-10 flex items-center justify-between border-t border-black/8 pt-6">
 
@@ -422,6 +660,7 @@ export default function RegisterPage() {
 
               <button
                 type="button"
+                onClick={completeRegistration}
                 className="rounded-full bg-[#1D1D1B] px-7 py-4 text-sm font-medium text-white transition duration-300 hover:-translate-y-0.5 hover:bg-black"
               >
                 Complete Registration →
