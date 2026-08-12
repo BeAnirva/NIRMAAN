@@ -1,1 +1,448 @@
+"use client";
 
+import { useState } from "react";
+
+export default function RegisterPage() {
+  const [step, setStep] = useState(1);
+
+  const [formData, setFormData] = useState({
+    name: "",
+    age: "",
+    mobile: "",
+    email: "",
+    city: "",
+    currentStatus: "",
+    interests: "",
+    goal: "",
+  });
+
+  const updateField = (field: string, value: string) => {
+    setFormData((previous) => ({
+      ...previous,
+      [field]: value,
+    }));
+  };
+
+  const nextStep = () => {
+    if (step < 3) {
+      setStep(step + 1);
+    }
+  };
+
+  const previousStep = () => {
+    if (step > 1) {
+      setStep(step - 1);
+    }
+  };
+
+  return (
+    <main className="min-h-screen bg-[#F8F6F1]">
+
+      {/* NAVIGATION */}
+
+      <header className="border-b border-black/5 bg-[#F8F6F1]/90">
+        <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 md:px-10 lg:px-12">
+
+          <a href="/" className="group">
+
+            <div className="text-2xl font-bold tracking-[-0.04em]">
+              NIRMAAN
+            </div>
+
+            <div className="mt-0.5 text-[9px] font-medium tracking-[0.25em] text-black/45">
+              LEARN • BUILD • BECOME
+            </div>
+
+          </a>
+
+          <a
+            href="/"
+            className="text-sm text-black/50 transition hover:text-black"
+          >
+            ← Back to Nirmaan
+          </a>
+
+        </nav>
+      </header>
+
+
+      {/* MAIN */}
+
+      <div className="mx-auto max-w-3xl px-6 py-16 md:px-10 md:py-24">
+
+        {/* INTRO */}
+
+        <div className="mb-12">
+
+          <p className="text-xs font-medium uppercase tracking-[0.25em] text-black/40">
+            Start your journey
+          </p>
+
+          <h1 className="mt-5 text-4xl font-medium leading-tight tracking-[-0.04em] md:text-5xl">
+            Let's get to know
+            <br />
+            <span className="font-serif italic font-normal">
+              you.
+            </span>
+          </h1>
+
+          <p className="mt-5 max-w-xl text-base leading-7 text-black/50">
+            There are no right or wrong answers. Tell us a little about
+            yourself so we can understand how Nirmaan can support you.
+          </p>
+
+        </div>
+
+
+        {/* PROGRESS */}
+
+        <div className="mb-12">
+
+          <div className="flex items-center gap-3">
+
+            {[1, 2, 3].map((number) => (
+
+              <div
+                key={number}
+                className={`h-1 flex-1 rounded-full transition duration-300 ${
+                  number <= step
+                    ? "bg-[#1D1D1B]"
+                    : "bg-black/10"
+                }`}
+              />
+
+            ))}
+
+          </div>
+
+          <div className="mt-3 flex justify-between text-xs text-black/35">
+
+            <span>About You</span>
+
+            <span>Your Direction</span>
+
+            <span>Your Goals</span>
+
+          </div>
+
+        </div>
+
+
+        {/* FORM CARD */}
+
+        <div className="rounded-[2rem] border border-black/5 bg-white p-7 shadow-sm md:p-10">
+
+          {/* STEP 1 */}
+
+          {step === 1 && (
+
+            <div>
+
+              <p className="text-xs font-medium uppercase tracking-[0.2em] text-black/35">
+                Step 01
+              </p>
+
+              <h2 className="mt-3 text-2xl font-medium tracking-[-0.03em]">
+                Tell us about yourself
+              </h2>
+
+              <div className="mt-8 space-y-6">
+
+                {/* NAME */}
+
+                <div>
+
+                  <label className="mb-2 block text-sm font-medium">
+                    Full Name
+                  </label>
+
+                  <input
+                    type="text"
+                    value={formData.name}
+                    onChange={(e) =>
+                      updateField("name", e.target.value)
+                    }
+                    placeholder="Your full name"
+                    className="w-full rounded-xl border border-black/10 bg-[#F8F6F1] px-4 py-4 text-sm outline-none transition focus:border-black/30"
+                  />
+
+                </div>
+
+
+                {/* AGE */}
+
+                <div>
+
+                  <label className="mb-2 block text-sm font-medium">
+                    Age
+                  </label>
+
+                  <input
+                    type="number"
+                    value={formData.age}
+                    onChange={(e) =>
+                      updateField("age", e.target.value)
+                    }
+                    placeholder="Your age"
+                    className="w-full rounded-xl border border-black/10 bg-[#F8F6F1] px-4 py-4 text-sm outline-none transition focus:border-black/30"
+                  />
+
+                </div>
+
+
+                {/* MOBILE */}
+
+                <div>
+
+                  <label className="mb-2 block text-sm font-medium">
+                    Mobile Number
+                  </label>
+
+                  <input
+                    type="tel"
+                    value={formData.mobile}
+                    onChange={(e) =>
+                      updateField("mobile", e.target.value)
+                    }
+                    placeholder="Your mobile number"
+                    className="w-full rounded-xl border border-black/10 bg-[#F8F6F1] px-4 py-4 text-sm outline-none transition focus:border-black/30"
+                  />
+
+                </div>
+
+
+                {/* EMAIL */}
+
+                <div>
+
+                  <label className="mb-2 block text-sm font-medium">
+                    Email Address
+                  </label>
+
+                  <input
+                    type="email"
+                    value={formData.email}
+                    onChange={(e) =>
+                      updateField("email", e.target.value)
+                    }
+                    placeholder="you@example.com"
+                    className="w-full rounded-xl border border-black/10 bg-[#F8F6F1] px-4 py-4 text-sm outline-none transition focus:border-black/30"
+                  />
+
+                </div>
+
+
+                {/* CITY */}
+
+                <div>
+
+                  <label className="mb-2 block text-sm font-medium">
+                    City
+                  </label>
+
+                  <input
+                    type="text"
+                    value={formData.city}
+                    onChange={(e) =>
+                      updateField("city", e.target.value)
+                    }
+                    placeholder="Where are you based?"
+                    className="w-full rounded-xl border border-black/10 bg-[#F8F6F1] px-4 py-4 text-sm outline-none transition focus:border-black/30"
+                  />
+
+                </div>
+
+              </div>
+
+            </div>
+
+          )}
+
+
+          {/* STEP 2 */}
+
+          {step === 2 && (
+
+            <div>
+
+              <p className="text-xs font-medium uppercase tracking-[0.2em] text-black/35">
+                Step 02
+              </p>
+
+              <h2 className="mt-3 text-2xl font-medium tracking-[-0.03em]">
+                Where are you right now?
+              </h2>
+
+              <p className="mt-3 text-sm leading-6 text-black/50">
+                Choose the option that feels closest to where you are today.
+              </p>
+
+
+              <div className="mt-8 grid gap-3">
+
+                {[
+                  "I'm studying",
+                  "I'm looking for work",
+                  "I'm currently working",
+                  "I want to start something of my own",
+                  "I'm not sure yet",
+                ].map((option) => (
+
+                  <button
+                    key={option}
+                    type="button"
+                    onClick={() =>
+                      updateField("currentStatus", option)
+                    }
+                    className={`rounded-xl border px-5 py-4 text-left text-sm transition ${
+                      formData.currentStatus === option
+                        ? "border-[#1D1D1B] bg-[#1D1D1B] text-white"
+                        : "border-black/10 bg-[#F8F6F1] hover:border-black/25"
+                    }`}
+                  >
+                    {option}
+                  </button>
+
+                ))}
+
+              </div>
+
+
+              <div className="mt-10">
+
+                <label className="mb-2 block text-sm font-medium">
+                  What are you most interested in?
+                </label>
+
+                <textarea
+                  value={formData.interests}
+                  onChange={(e) =>
+                    updateField("interests", e.target.value)
+                  }
+                  placeholder="Tell us about your interests, skills or things you'd like to learn..."
+                  rows={5}
+                  className="w-full resize-none rounded-xl border border-black/10 bg-[#F8F6F1] px-4 py-4 text-sm outline-none transition focus:border-black/30"
+                />
+
+              </div>
+
+            </div>
+
+          )}
+
+
+          {/* STEP 3 */}
+
+          {step === 3 && (
+
+            <div>
+
+              <p className="text-xs font-medium uppercase tracking-[0.2em] text-black/35">
+                Step 03
+              </p>
+
+              <h2 className="mt-3 text-2xl font-medium tracking-[-0.03em]">
+                Where would you like to go?
+              </h2>
+
+              <p className="mt-3 text-sm leading-6 text-black/50">
+                You don't need to have a perfect plan. Just tell us what
+                you're hoping to work towards.
+              </p>
+
+
+              <div className="mt-8">
+
+                <label className="mb-2 block text-sm font-medium">
+                  What would you like to achieve?
+                </label>
+
+                <textarea
+                  value={formData.goal}
+                  onChange={(e) =>
+                    updateField("goal", e.target.value)
+                  }
+                  placeholder="For example: get a job, learn a new skill, start a business, become financially independent..."
+                  rows={7}
+                  className="w-full resize-none rounded-xl border border-black/10 bg-[#F8F6F1] px-4 py-4 text-sm outline-none transition focus:border-black/30"
+                />
+
+              </div>
+
+
+              <div className="mt-7 rounded-xl bg-[#E9E4DA] p-5">
+
+                <p className="text-sm leading-6 text-black/60">
+                  <span className="font-medium text-black">
+                    Remember:
+                  </span>{" "}
+                  You don't need to know exactly where you're going.
+                  Nirmaan is here to help you figure out the next step.
+                </p>
+
+              </div>
+
+            </div>
+
+          )}
+
+
+          {/* NAVIGATION */}
+
+          <div className="mt-10 flex items-center justify-between border-t border-black/8 pt-6">
+
+            {step > 1 ? (
+
+              <button
+                type="button"
+                onClick={previousStep}
+                className="text-sm font-medium text-black/50 transition hover:text-black"
+              >
+                ← Back
+              </button>
+
+            ) : (
+
+              <div />
+
+            )}
+
+
+            {step < 3 ? (
+
+              <button
+                type="button"
+                onClick={nextStep}
+                className="rounded-full bg-[#1D1D1B] px-7 py-4 text-sm font-medium text-white transition duration-300 hover:-translate-y-0.5 hover:bg-black"
+              >
+                Continue →
+              </button>
+
+            ) : (
+
+              <button
+                type="button"
+                className="rounded-full bg-[#1D1D1B] px-7 py-4 text-sm font-medium text-white transition duration-300 hover:-translate-y-0.5 hover:bg-black"
+              >
+                Complete Registration →
+              </button>
+
+            )}
+
+          </div>
+
+        </div>
+
+
+        {/* FOOTNOTE */}
+
+        <p className="mt-8 text-center text-xs leading-5 text-black/30">
+          Your information will only be used to understand how Nirmaan
+          can support your journey.
+        </p>
+
+      </div>
+
+    </main>
+  );
+}
