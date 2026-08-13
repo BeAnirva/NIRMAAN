@@ -10,12 +10,12 @@ export default function Hero() {
       <div className="mx-auto grid min-h-[calc(100vh-90px)] max-w-7xl items-center gap-12 px-6 py-16 md:px-10 md:py-24 lg:grid-cols-2 lg:px-12 lg:py-20">
 
         {/* LEFT CONTENT */}
-        <div className="relative z-10">
+        <div className="relative z-10 min-w-0">
 
           {/* Eyebrow */}
-          <div className="mb-7 inline-flex items-center gap-2 rounded-full border border-black/10 bg-white/50 px-4 py-2">
+          <div className="mb-7 inline-flex max-w-full items-center gap-2 rounded-full border border-black/10 bg-white/50 px-4 py-2">
 
-            <span className="h-2 w-2 rounded-full bg-[#6D8068]" />
+            <span className="h-2 w-2 shrink-0 rounded-full bg-[#6D8068]" />
 
             <span className="text-xs font-medium uppercase tracking-[0.18em] text-black/55">
               Your future starts here
@@ -25,17 +25,15 @@ export default function Hero() {
 
 
           {/* Main heading */}
-          <h1 className="max-w-3xl text-5xl font-semibold leading-[0.98] tracking-[-0.055em] sm:text-6xl md:text-7xl lg:text-[4.5rem]">
+          <h1 className="max-w-full text-[3.15rem] font-semibold leading-[0.98] tracking-[-0.055em] sm:text-6xl md:text-7xl lg:max-w-3xl lg:text-[4.5rem]">
 
             {/* First line */}
-            <span className="whitespace-nowrap">
+            <span className="block whitespace-nowrap">
               Your next chapter,
             </span>
 
-            <br />
-
             {/* Second line */}
-            <span className="font-serif italic font-normal">
+            <span className="block font-serif italic font-normal">
               written by you.
             </span>
 
@@ -43,19 +41,19 @@ export default function Hero() {
 
 
           {/* Description */}
-          <p className="mt-8 max-w-xl text-base leading-7 text-black/60 md:text-lg md:leading-8">
+          <p className="mt-7 max-w-xl text-base leading-7 text-black/60 sm:mt-8 md:text-lg md:leading-8">
             A place to start where you are, discover what you're
             capable of, and take your next step with someone beside you.
           </p>
 
 
           {/* BUTTONS */}
-          <div className="mt-10 flex flex-col gap-3 sm:flex-row">
+          <div className="mt-9 flex w-full flex-col gap-3 sm:mt-10 sm:flex-row">
 
             {/* Primary CTA */}
             <a
               href="/register"
-              className="group inline-flex items-center justify-center gap-2 rounded-full bg-[#1D1D1B] px-7 py-4 text-sm font-medium text-white transition duration-300 hover:-translate-y-1 hover:bg-black"
+              className="group inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#1D1D1B] px-6 py-4 text-sm font-medium text-white transition duration-300 hover:-translate-y-1 hover:bg-black sm:w-auto sm:px-7"
             >
               <span>Start Your Journey</span>
 
@@ -68,7 +66,7 @@ export default function Hero() {
             {/* Secondary CTA */}
             <a
               href="#programs"
-              className="inline-flex items-center justify-center rounded-full border border-black/15 bg-white/50 px-7 py-4 text-sm font-medium text-black transition duration-300 hover:-translate-y-1 hover:bg-white"
+              className="inline-flex w-full items-center justify-center rounded-full border border-black/15 bg-white/50 px-6 py-4 text-sm font-medium text-black transition duration-300 hover:-translate-y-1 hover:bg-white sm:w-auto sm:px-7"
             >
               Explore Nirmaan
             </a>
@@ -77,7 +75,7 @@ export default function Hero() {
 
 
           {/* TRUST LINE */}
-          <div className="mt-10 flex flex-wrap gap-x-6 gap-y-2 text-xs text-black/40">
+          <div className="mt-9 flex flex-wrap gap-x-5 gap-y-2 text-xs text-black/40 sm:mt-10 sm:gap-x-6">
 
             <span>100% Free</span>
 
@@ -95,7 +93,7 @@ export default function Hero() {
 
 
         {/* RIGHT VISUAL */}
-        <div className="relative">
+        <div className="relative min-w-0">
 
           <div className="relative mx-auto aspect-[4/5] w-full max-w-lg overflow-hidden rounded-[2rem] bg-[#DDD7CB]">
 
