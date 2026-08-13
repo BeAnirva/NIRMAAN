@@ -7,7 +7,7 @@ export default function Hero() {
       {/* Decorative circle */}
       <div className="pointer-events-none absolute -right-32 -top-32 h-96 w-96 rounded-full bg-[#E8E1D4] opacity-60 blur-3xl" />
 
-      <div className="mx-auto grid min-h-[calc(100vh-90px)] max-w-7xl items-center gap-12 px-6 py-16 md:px-10 md:py-24 lg:grid-cols-2 lg:px-12 lg:py-20">
+      <div className="mx-auto grid min-h-[calc(100vh-90px)] max-w-7xl items-center gap-12 px-5 py-14 sm:px-6 sm:py-16 md:px-10 md:py-24 lg:grid-cols-2 lg:px-12 lg:py-20">
 
         {/* LEFT CONTENT */}
         <div className="relative z-10 min-w-0">
@@ -24,11 +24,11 @@ export default function Hero() {
           </div>
 
 
-          {/* Main heading */}
-          <h1 className="max-w-full text-[3.15rem] font-semibold leading-[0.98] tracking-[-0.055em] sm:text-6xl md:text-7xl lg:max-w-3xl lg:text-[4.5rem]">
+          {/* MAIN HEADING */}
+          <h1 className="max-w-full text-[2.8rem] font-semibold leading-[0.98] tracking-[-0.055em] sm:text-6xl md:text-7xl lg:max-w-3xl lg:text-[4.5rem]">
 
             {/* First line */}
-            <span className="block whitespace-nowrap">
+            <span className="block md:whitespace-nowrap">
               Your next chapter,
             </span>
 
@@ -40,7 +40,7 @@ export default function Hero() {
           </h1>
 
 
-          {/* Description */}
+          {/* DESCRIPTION */}
           <p className="mt-7 max-w-xl text-base leading-7 text-black/60 sm:mt-8 md:text-lg md:leading-8">
             A place to start where you are, discover what you're
             capable of, and take your next step with someone beside you.
@@ -50,23 +50,23 @@ export default function Hero() {
           {/* BUTTONS */}
           <div className="mt-9 flex w-full flex-col gap-3 sm:mt-10 sm:flex-row">
 
-            {/* Primary CTA */}
+            {/* PRIMARY CTA */}
             <a
               href="/register"
-              className="group inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#1D1D1B] px-6 py-4 text-sm font-medium text-white transition duration-300 hover:-translate-y-1 hover:bg-black sm:w-auto sm:px-7"
+              className="group flex w-full min-w-0 items-center justify-center gap-2 rounded-full bg-[#1D1D1B] px-5 py-4 text-sm font-medium text-white transition duration-300 hover:-translate-y-1 hover:bg-black sm:inline-flex sm:w-auto sm:px-7"
             >
               <span>Start Your Journey</span>
 
-              <span className="transition-transform duration-300 group-hover:translate-x-1">
+              <span className="shrink-0 transition-transform duration-300 group-hover:translate-x-1">
                 →
               </span>
             </a>
 
 
-            {/* Secondary CTA */}
+            {/* SECONDARY CTA */}
             <a
               href="#programs"
-              className="inline-flex w-full items-center justify-center rounded-full border border-black/15 bg-white/50 px-6 py-4 text-sm font-medium text-black transition duration-300 hover:-translate-y-1 hover:bg-white sm:w-auto sm:px-7"
+              className="flex w-full min-w-0 items-center justify-center rounded-full border border-black/15 bg-white/50 px-5 py-4 text-sm font-medium text-black transition duration-300 hover:-translate-y-1 hover:bg-white sm:inline-flex sm:w-auto sm:px-7"
             >
               Explore Nirmaan
             </a>
@@ -107,7 +107,7 @@ export default function Hero() {
           </div>
 
 
-          {/* Floating card */}
+          {/* FLOATING CARD */}
           <div className="absolute -bottom-6 -left-4 max-w-[230px] rounded-2xl border border-black/5 bg-white p-5 shadow-xl shadow-black/5 sm:-left-8">
 
             <p className="text-xs uppercase tracking-[0.15em] text-black/40">
