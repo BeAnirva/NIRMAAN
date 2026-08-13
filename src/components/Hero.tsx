@@ -97,11 +97,11 @@ export default function Hero() {
         {/* RIGHT VISUAL */}
         <div className="relative">
 
-          <div className="relative mx-auto aspect-[4/5] max-w-md overflow-hidden rounded-[2rem] bg-[#DDD7CB]">
+          <div className="relative mx-auto aspect-[4/5] w-full max-w-lg overflow-hidden rounded-[2rem] bg-[#DDD7CB]">
 
             {/* HERO IMAGE */}
             <img
-              src="/images/nirmaan-hero.jpg"
+              src="/image/nirmaan-hero.jpg"
               alt="A young person beginning their journey"
               className="h-full w-full object-cover"
             />
