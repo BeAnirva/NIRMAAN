@@ -25,12 +25,16 @@ export default function Hero() {
 
 
           {/* Main heading */}
-          <h1 className="max-w-3xl text-5xl font-semibold leading-[0.98] tracking-[-0.055em] sm:text-6xl md:text-7xl lg:text-[5.5rem]">
+          <h1 className="max-w-3xl text-5xl font-semibold leading-[0.98] tracking-[-0.055em] sm:text-6xl md:text-7xl lg:text-[4.5rem]">
 
-            Your next chapter,
+            {/* First line */}
+            <span className="whitespace-nowrap">
+              Your next chapter,
+            </span>
 
             <br />
 
+            {/* Second line */}
             <span className="font-serif italic font-normal">
               written by you.
             </span>
@@ -40,10 +44,8 @@ export default function Hero() {
 
           {/* Description */}
           <p className="mt-8 max-w-xl text-base leading-7 text-black/60 md:text-lg md:leading-8">
-
             A place to start where you are, discover what you're
             capable of, and take your next step with someone beside you.
-
           </p>
 
 
@@ -55,13 +57,11 @@ export default function Hero() {
               href="/register"
               className="group inline-flex items-center justify-center gap-2 rounded-full bg-[#1D1D1B] px-7 py-4 text-sm font-medium text-white transition duration-300 hover:-translate-y-1 hover:bg-black"
             >
-
               <span>Start Your Journey</span>
 
               <span className="transition-transform duration-300 group-hover:translate-x-1">
                 →
               </span>
-
             </a>
 
 
