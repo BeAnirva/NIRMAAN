@@ -44,14 +44,16 @@ export default function BecomeAMentor() {
                 Become a Mentor
               </p>
 
-             <h1 className="max-w-4xl text-5xl font-semibold leading-[0.95] tracking-[-0.055em] sm:text-6xl md:text-7xl lg:text-[5.5rem]">
+            <h1 className="max-w-2xl text-4xl font-semibold leading-[1.02] tracking-[-0.045em] sm:text-5xl md:text-6xl lg:text-[4.5rem]">
+
   Heroes don't always
   <br />
+
   <span className="font-serif italic font-normal">
     wear capes.
   </span>
-</h1>
 
+</h1>
             </div>
 
 
