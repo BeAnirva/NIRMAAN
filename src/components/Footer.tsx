@@ -8,9 +8,7 @@ const footerLinks = {
 
   opportunities: [
     { label: "Career Support", href: "/career" },
-    { label: "Become a Mentor", href: "/mentorship" },
     { label: "Nirmaan Ventures", href: "/ventures" },
-    { label: "Stories", href: "/stories" },
   ],
 };
 
@@ -112,9 +110,11 @@ export default function Footer() {
                 className="mt-2 inline-flex items-center text-sm font-medium text-white transition hover:text-white/70"
               >
                 Become a Mentor
+
                 <span className="ml-2 transition-transform duration-300 hover:translate-x-1">
                   →
                 </span>
+
               </a>
 
             </div>
