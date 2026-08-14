@@ -331,29 +331,54 @@ export default function BecomeAMentor() {
                 </div>
 
 
-                {/* WHAT CAN YOU CONTRIBUTE */}
+               {/* HOW YOU'D LIKE TO CONTRIBUTE */}
 
-                <div>
+<div>
 
-                  <label className="mb-2 block text-sm font-medium text-black/70">
-                    What can you contribute?{" "}
-                    <span className="text-black/40">*</span>
-                  </label>
+  <label className="mb-3 block text-sm font-medium text-black/70">
+    HOW YOU'D LIKE TO CONTRIBUTE{" "}
+    <span className="text-black/40">*</span>
+  </label>
 
-                  <textarea
-                    name="contribution"
-                    required
-                    rows={4}
-                    placeholder="Tell us what you'd like to share — mentoring, career guidance, skills, workshops, projects, industry knowledge, experiences, or anything else you can offer."
-                    className="w-full resize-none rounded-xl border border-black/10 bg-[#F8F6F1] px-4 py-3.5 text-sm leading-6 outline-none transition placeholder:text-black/30 focus:border-black/30"
-                  />
+  <p className="mb-4 text-xs text-black/40">
+    Select all that apply.
+  </p>
 
-                  <p className="mt-2 text-xs leading-5 text-black/35">
-                    There is no right answer. Tell us what you feel you can
-                    genuinely offer to someone starting out.
-                  </p>
+  <div className="grid gap-3 sm:grid-cols-2">
 
-                </div>
+    {[
+      "1:1 Mentoring",
+      "Career Guidance",
+      "Workshops",
+      "Skill Sessions",
+      "Project Guidance",
+      "Community Sessions",
+      "Other",
+    ].map((option) => (
+
+      <label
+        key={option}
+        className="flex cursor-pointer items-center gap-3 rounded-xl border border-black/10 bg-[#F8F6F1] px-4 py-3.5 text-sm text-black/60 transition hover:border-black/20"
+      >
+
+        <input
+          type="checkbox"
+          name="contribution"
+          value={option}
+          className="h-4 w-4 accent-black"
+        />
+
+        <span>
+          {option}
+        </span>
+
+      </label>
+
+    ))}
+
+  </div>
+
+</div>
 
 
                 {/* YEARS OF EXPERIENCE */}
