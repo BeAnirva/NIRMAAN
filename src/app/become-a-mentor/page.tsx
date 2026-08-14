@@ -44,18 +44,12 @@ export default function BecomeAMentor() {
                 Become a Mentor
               </p>
 
-              <h1 className="max-w-4xl text-5xl font-semibold leading-[0.95] tracking-[-0.055em] sm:text-6xl md:text-7xl lg:text-[5.5rem]">
-
+             <h1 className="max-w-4xl text-5xl font-semibold leading-[0.95] tracking-[-0.055em] sm:text-6xl md:text-7xl lg:text-[5.5rem]">
   Heroes don't always
   <br />
-
-  wear capes.
-  <br />
-
   <span className="font-serif italic font-normal">
-    They pass the spark forward.
+    wear capes.
   </span>
-
 </h1>
 
             </div>
