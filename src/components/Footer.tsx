@@ -5,13 +5,15 @@ const footerLinks = {
     { label: "Your Journey", href: "#journey" },
     { label: "Learning", href: "#learning" },
   ],
+
   opportunities: [
-    { label: "Career Support", href: "#career" },
-    { label: "Mentorship", href: "#mentorship" },
-    { label: "Nirmaan Ventures", href: "#ventures" },
-    { label: "Stories", href: "#stories" },
+    { label: "Career Support", href: "/career" },
+    { label: "Become a Mentor", href: "/mentorship" },
+    { label: "Nirmaan Ventures", href: "/ventures" },
+    { label: "Stories", href: "/stories" },
   ],
 };
+
 
 export default function Footer() {
   return (
@@ -93,6 +95,27 @@ export default function Footer() {
                 </a>
 
               ))}
+
+            </div>
+
+
+            {/* MENTOR CTA */}
+
+            <div className="mt-8 border-t border-white/10 pt-6">
+
+              <p className="text-sm text-white/40">
+                Want to contribute?
+              </p>
+
+              <a
+                href="/mentorship"
+                className="mt-2 inline-flex items-center text-sm font-medium text-white transition hover:text-white/70"
+              >
+                Become a Mentor
+                <span className="ml-2 transition-transform duration-300 hover:translate-x-1">
+                  →
+                </span>
+              </a>
 
             </div>
 
