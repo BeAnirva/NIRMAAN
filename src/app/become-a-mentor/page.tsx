@@ -46,14 +46,14 @@ export default function BecomeAMentor() {
 
               <h1 className="max-w-4xl text-5xl font-semibold leading-[0.95] tracking-[-0.055em] sm:text-6xl md:text-7xl lg:text-[5.5rem]">
 
-                Your experience
+                You don’t need a cape
                 <br />
 
-                could become
+                to change a life.
                 <br />
 
                 <span className="font-serif italic font-normal">
-                  someone's beginning.
+                  You just need something worth passing on.
                 </span>
 
               </h1>
