@@ -102,7 +102,7 @@ export default function Navbar() {
                 </a>
 
                 <a
-                  href="/become-a-mentor"
+                  href="/mentorship"
                   className="block rounded-xl px-4 py-3 text-sm text-black/70 transition hover:bg-[#F8F6F1] hover:text-black"
                   onClick={() => setExploreOpen(false)}
                 >
