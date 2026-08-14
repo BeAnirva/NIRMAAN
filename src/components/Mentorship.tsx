@@ -99,18 +99,31 @@ export default function Mentorship() {
 
             <div className="relative z-10 flex h-full flex-col justify-between">
 
+              {/* TOP ROW */}
+
               <div className="flex items-center justify-between">
 
                 <span className="text-xs font-medium uppercase tracking-[0.2em] text-black/40">
                   The Nirmaan Community
                 </span>
 
-                <span className="flex h-10 w-10 items-center justify-center rounded-full bg-black/10">
-                  ↗
-                </span>
+
+                {/* CLICKABLE ARROW */}
+
+                <a
+                  href="/become-a-mentor"
+                  aria-label="Become a mentor"
+                  className="group flex h-12 w-12 items-center justify-center rounded-full bg-black/10 transition-all duration-300 hover:-translate-y-1 hover:bg-black/20"
+                >
+                  <span className="text-xl transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1">
+                    ↗
+                  </span>
+                </a>
 
               </div>
 
+
+              {/* MESSAGE */}
 
               <div>
 
