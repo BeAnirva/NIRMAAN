@@ -116,16 +116,6 @@ export default function Navbar() {
           </div>
 
 
-          {/* STORIES */}
-
-          <a
-            href="/stories"
-            className="text-sm text-black/65 transition hover:text-black"
-          >
-            Stories
-          </a>
-
-
           {/* FAQ */}
 
           <a
@@ -267,17 +257,6 @@ export default function Navbar() {
               </div>
 
             )}
-
-
-            {/* STORIES */}
-
-            <a
-              href="/stories"
-              onClick={() => setMenuOpen(false)}
-              className="text-base text-black/70"
-            >
-              Stories
-            </a>
 
 
             {/* FAQ */}
