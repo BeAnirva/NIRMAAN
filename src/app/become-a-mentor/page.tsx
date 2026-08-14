@@ -1,4 +1,10 @@
+"use client";
+
+import { useState } from "react";
+
 export default function BecomeAMentor() {
+  const [submitted, setSubmitted] = useState(false);
+
   return (
     <main className="min-h-screen bg-[#F8F6F1]">
 
@@ -44,16 +50,17 @@ export default function BecomeAMentor() {
                 Become a Mentor
               </p>
 
-            <h1 className="max-w-2xl text-4xl font-semibold leading-[1.02] tracking-[-0.045em] sm:text-5xl md:text-6xl lg:text-[4.5rem]">
+              <h1 className="max-w-2xl text-4xl font-semibold leading-[1.02] tracking-[-0.045em] sm:text-5xl md:text-6xl lg:text-[4.5rem]">
 
-  Heroes don't always
-  <br />
+                Heroes don't always
+                <br />
 
-  <span className="font-serif italic font-normal">
-    wear capes.
-  </span>
+                <span className="font-serif italic font-normal">
+                  wear capes.
+                </span>
 
-</h1>
+              </h1>
+
             </div>
 
 
@@ -62,14 +69,10 @@ export default function BecomeAMentor() {
             <div>
 
               <p className="max-w-xl text-base leading-7 text-black/60 md:text-lg md:leading-8">
-
-                You've learned things that someone else is just
-                beginning to figure out.
-
-                Nirmaan gives you a space to share your experience,
-                guide young people and contribute to someone's
+                You've learned things that someone else is just beginning
+                to figure out. Nirmaan gives you a space to share your
+                experience, guide young people and contribute to someone's
                 next step.
-
               </p>
 
             </div>
@@ -80,6 +83,7 @@ export default function BecomeAMentor() {
           {/* FORM AREA */}
 
           <div className="mt-20 grid gap-6 lg:grid-cols-[0.8fr_1.2fr]">
+
 
             {/* LEFT MESSAGE */}
 
@@ -121,6 +125,7 @@ export default function BecomeAMentor() {
 
                   </p>
 
+
                   <div className="mt-8">
 
                     <span className="inline-flex rounded-full bg-black/10 px-4 py-2 text-xs font-medium text-black/55">
@@ -151,25 +156,34 @@ export default function BecomeAMentor() {
                 </h2>
 
                 <p className="mt-3 max-w-xl text-sm leading-6 text-black/50">
-                  This helps us understand your experience and how
-                  you would like to contribute to the Nirmaan community.
+                  This helps us understand who you are and how you would
+                  like to contribute to the Nirmaan community.
                 </p>
 
               </div>
 
 
-              <form className="mt-10 space-y-6">
+              <form
+                className="mt-10 space-y-6"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  setSubmitted(true);
+                }}
+              >
 
-                {/* NAME */}
+
+                {/* FULL NAME */}
 
                 <div>
 
                   <label className="mb-2 block text-sm font-medium text-black/70">
-                    Full Name
+                    Full Name <span className="text-black/40">*</span>
                   </label>
 
                   <input
+                    name="fullName"
                     type="text"
+                    required
                     placeholder="Your full name"
                     className="w-full rounded-xl border border-black/10 bg-[#F8F6F1] px-4 py-3.5 text-sm outline-none transition placeholder:text-black/30 focus:border-black/30"
                   />
@@ -184,11 +198,13 @@ export default function BecomeAMentor() {
                   <div>
 
                     <label className="mb-2 block text-sm font-medium text-black/70">
-                      Email
+                      Email <span className="text-black/40">*</span>
                     </label>
 
                     <input
+                      name="email"
                       type="email"
+                      required
                       placeholder="you@example.com"
                       className="w-full rounded-xl border border-black/10 bg-[#F8F6F1] px-4 py-3.5 text-sm outline-none transition placeholder:text-black/30 focus:border-black/30"
                     />
@@ -199,11 +215,13 @@ export default function BecomeAMentor() {
                   <div>
 
                     <label className="mb-2 block text-sm font-medium text-black/70">
-                      Mobile Number
+                      Mobile Number <span className="text-black/40">*</span>
                     </label>
 
                     <input
+                      name="mobile"
                       type="tel"
+                      required
                       placeholder="+91 XXXXX XXXXX"
                       className="w-full rounded-xl border border-black/10 bg-[#F8F6F1] px-4 py-3.5 text-sm outline-none transition placeholder:text-black/30 focus:border-black/30"
                     />
@@ -213,51 +231,145 @@ export default function BecomeAMentor() {
                 </div>
 
 
-                {/* ROLE + ORGANIZATION */}
+                {/* COMMUNITY STATUS */}
 
-                <div className="grid gap-6 sm:grid-cols-2">
+                <div>
 
-                  <div>
+                  <label className="mb-2 block text-sm font-medium text-black/70">
+                    You are a <span className="text-black/40">*</span>
+                  </label>
 
-                    <label className="mb-2 block text-sm font-medium text-black/70">
-                      Current Role / Profession
-                    </label>
+                  <select
+                    name="status"
+                    required
+                    defaultValue=""
+                    className="w-full rounded-xl border border-black/10 bg-[#F8F6F1] px-4 py-3.5 text-sm text-black/60 outline-none transition focus:border-black/30"
+                  >
 
-                    <input
-                      type="text"
-                      placeholder="e.g. HR Manager"
-                      className="w-full rounded-xl border border-black/10 bg-[#F8F6F1] px-4 py-3.5 text-sm outline-none transition placeholder:text-black/30 focus:border-black/30"
-                    />
+                    <option value="" disabled>
+                      Select your current status
+                    </option>
 
-                  </div>
+                    <option value="student">
+                      Student
+                    </option>
 
+                    <option value="working-professional">
+                      Working Professional
+                    </option>
 
-                  <div>
+                    <option value="own-venture">
+                      Own Venture / Entrepreneur
+                    </option>
 
-                    <label className="mb-2 block text-sm font-medium text-black/70">
-                      Organization
-                    </label>
-
-                    <input
-                      type="text"
-                      placeholder="Company / Organization"
-                      className="w-full rounded-xl border border-black/10 bg-[#F8F6F1] px-4 py-3.5 text-sm outline-none transition placeholder:text-black/30 focus:border-black/30"
-                    />
-
-                  </div>
+                  </select>
 
                 </div>
 
 
-                {/* EXPERIENCE */}
+                {/* FIELD */}
+
+                <div>
+
+                  <label className="mb-2 block text-sm font-medium text-black/70">
+                    Your Field <span className="text-black/40">*</span>
+                  </label>
+
+                  <input
+                    name="field"
+                    type="text"
+                    required
+                    placeholder="e.g. Agriculture, Technology, HR, Design, Finance..."
+                    className="w-full rounded-xl border border-black/10 bg-[#F8F6F1] px-4 py-3.5 text-sm outline-none transition placeholder:text-black/30 focus:border-black/30"
+                  />
+
+                  <p className="mt-2 text-xs leading-5 text-black/35">
+                    Tell us the field, industry, subject or area you know best.
+                  </p>
+
+                </div>
+
+
+                {/* CURRENT ROLE */}
+
+                <div>
+
+                  <label className="mb-2 block text-sm font-medium text-black/70">
+                    Current Role / Profession{" "}
+                    <span className="text-black/40">*</span>
+                  </label>
+
+                  <input
+                    name="role"
+                    type="text"
+                    required
+                    placeholder="e.g. HR Manager, Student, Founder, Designer..."
+                    className="w-full rounded-xl border border-black/10 bg-[#F8F6F1] px-4 py-3.5 text-sm outline-none transition placeholder:text-black/30 focus:border-black/30"
+                  />
+
+                </div>
+
+
+                {/* ORGANIZATION */}
+
+                <div>
+
+                  <label className="mb-2 block text-sm font-medium text-black/70">
+                    Organization
+                    <span className="ml-2 text-xs font-normal text-black/30">
+                      Optional
+                    </span>
+                  </label>
+
+                  <input
+                    name="organization"
+                    type="text"
+                    placeholder="Company / Organization / College"
+                    className="w-full rounded-xl border border-black/10 bg-[#F8F6F1] px-4 py-3.5 text-sm outline-none transition placeholder:text-black/30 focus:border-black/30"
+                  />
+
+                </div>
+
+
+                {/* WHAT CAN YOU CONTRIBUTE */}
+
+                <div>
+
+                  <label className="mb-2 block text-sm font-medium text-black/70">
+                    What can you contribute?{" "}
+                    <span className="text-black/40">*</span>
+                  </label>
+
+                  <textarea
+                    name="contribution"
+                    required
+                    rows={4}
+                    placeholder="Tell us what you'd like to share — mentoring, career guidance, skills, workshops, projects, industry knowledge, experiences, or anything else you can offer."
+                    className="w-full resize-none rounded-xl border border-black/10 bg-[#F8F6F1] px-4 py-3.5 text-sm leading-6 outline-none transition placeholder:text-black/30 focus:border-black/30"
+                  />
+
+                  <p className="mt-2 text-xs leading-5 text-black/35">
+                    There is no right answer. Tell us what you feel you can
+                    genuinely offer to someone starting out.
+                  </p>
+
+                </div>
+
+
+                {/* YEARS OF EXPERIENCE */}
 
                 <div>
 
                   <label className="mb-2 block text-sm font-medium text-black/70">
                     Years of Experience
+                    <span className="ml-2 text-xs font-normal text-black/30">
+                      Optional
+                    </span>
                   </label>
 
                   <select
+                    name="experience"
+                    defaultValue=""
                     className="w-full rounded-xl border border-black/10 bg-[#F8F6F1] px-4 py-3.5 text-sm text-black/60 outline-none transition focus:border-black/30"
                   >
 
@@ -290,89 +402,21 @@ export default function BecomeAMentor() {
                 </div>
 
 
-                {/* FIELD */}
-
-                <div>
-
-                  <label className="mb-2 block text-sm font-medium text-black/70">
-                    Your Field
-                  </label>
-
-                  <select
-                    className="w-full rounded-xl border border-black/10 bg-[#F8F6F1] px-4 py-3.5 text-sm text-black/60 outline-none transition focus:border-black/30"
-                  >
-
-                    <option value="">
-                      Select your field
-                    </option>
-
-                    <option>Technology</option>
-                    <option>HR & Recruitment</option>
-                    <option>Marketing & Sales</option>
-                    <option>Finance</option>
-                    <option>Agriculture</option>
-                    <option>Design</option>
-                    <option>Entrepreneurship</option>
-                    <option>Education</option>
-                    <option>Healthcare</option>
-                    <option>Other</option>
-
-                  </select>
-
-                </div>
-
-
-                {/* CONTRIBUTION */}
-
-                <div>
-
-                  <label className="mb-3 block text-sm font-medium text-black/70">
-                    How would you like to contribute?
-                  </label>
-
-                  <div className="grid gap-3 sm:grid-cols-2">
-
-                    {[
-                      "1:1 Mentoring",
-                      "Career Guidance",
-                      "Workshops",
-                      "Skill Sessions",
-                      "Project Guidance",
-                      "Community Sessions",
-                    ].map((option) => (
-
-                      <label
-                        key={option}
-                        className="flex cursor-pointer items-center gap-3 rounded-xl border border-black/10 bg-[#F8F6F1] px-4 py-3.5 text-sm text-black/60 transition hover:border-black/20"
-                      >
-
-                        <input
-                          type="checkbox"
-                          className="h-4 w-4 accent-black"
-                        />
-
-                        {option}
-
-                      </label>
-
-                    ))}
-
-                  </div>
-
-                </div>
-
-
                 {/* ABOUT */}
 
                 <div>
 
                   <label className="mb-2 block text-sm font-medium text-black/70">
                     Tell us about yourself
+                    <span className="ml-2 text-xs font-normal text-black/30">
+                      Optional
+                    </span>
                   </label>
 
                   <textarea
+                    name="about"
                     rows={5}
-                    placeholder="Tell us about your experience, what you know, and what you'd like to share with the Nirmaan community."
+                    placeholder="Anything else you'd like us to know about your journey, experience or interests..."
                     className="w-full resize-none rounded-xl border border-black/10 bg-[#F8F6F1] px-4 py-3.5 text-sm leading-6 outline-none transition placeholder:text-black/30 focus:border-black/30"
                   />
 
@@ -385,9 +429,13 @@ export default function BecomeAMentor() {
 
                   <label className="mb-2 block text-sm font-medium text-black/70">
                     LinkedIn / Portfolio
+                    <span className="ml-2 text-xs font-normal text-black/30">
+                      Optional
+                    </span>
                   </label>
 
                   <input
+                    name="linkedin"
                     type="url"
                     placeholder="https://linkedin.com/in/yourname"
                     className="w-full rounded-xl border border-black/10 bg-[#F8F6F1] px-4 py-3.5 text-sm outline-none transition placeholder:text-black/30 focus:border-black/30"
@@ -415,9 +463,17 @@ export default function BecomeAMentor() {
 
                   </button>
 
+
                   <p className="mt-4 text-center text-xs leading-5 text-black/35">
                     We'll review your application and get back to you.
                   </p>
+
+
+                  {submitted && (
+                    <p className="mt-3 text-center text-sm font-medium text-black/60">
+                      Thank you for wanting to contribute to Nirmaan. ❤️
+                    </p>
+                  )}
 
                 </div>
 
