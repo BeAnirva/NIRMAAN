@@ -12,6 +12,7 @@ export default function RegisterPage() {
     mobile: "",
     email: "",
     city: "",
+    state: "",
     currentStatus: "",
     interests: "",
     goal: "",
@@ -67,6 +68,10 @@ export default function RegisterPage() {
 
     if (!formData.city.trim()) {
       newErrors.city = "Please enter your city.";
+    }
+
+    if (!formData.state) {
+      newErrors.state = "Please select your state.";
     }
 
     setErrors(newErrors);
@@ -127,6 +132,7 @@ export default function RegisterPage() {
 
     if (isValid && step < 3) {
       setStep(step + 1);
+
       window.scrollTo({
         top: 0,
         behavior: "smooth",
@@ -216,6 +222,7 @@ export default function RegisterPage() {
           <h1 className="mt-5 text-4xl font-medium leading-tight tracking-[-0.04em] md:text-5xl">
             Let's get to know
             <br />
+
             <span className="font-serif italic font-normal">
               you.
             </span>
@@ -448,6 +455,102 @@ export default function RegisterPage() {
                   {errors.city && (
                     <p className="mt-2 text-xs text-red-500">
                       {errors.city}
+                    </p>
+                  )}
+
+                </div>
+
+
+                {/* STATE */}
+
+                <div>
+
+                  <label className="mb-2 block text-sm font-medium">
+                    State
+                  </label>
+
+                  <select
+                    value={formData.state}
+                    onChange={(e) =>
+                      updateField("state", e.target.value)
+                    }
+                    className={`w-full rounded-xl border bg-[#F8F6F1] px-4 py-4 text-sm outline-none transition ${
+                      errors.state
+                        ? "border-red-400"
+                        : "border-black/10 focus:border-black/30"
+                    }`}
+                  >
+
+                    <option value="" disabled>
+                      Select your state
+                    </option>
+
+                    <option value="Andhra Pradesh">Andhra Pradesh</option>
+                    <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                    <option value="Assam">Assam</option>
+                    <option value="Bihar">Bihar</option>
+                    <option value="Chhattisgarh">Chhattisgarh</option>
+                    <option value="Goa">Goa</option>
+                    <option value="Gujarat">Gujarat</option>
+                    <option value="Haryana">Haryana</option>
+                    <option value="Himachal Pradesh">Himachal Pradesh</option>
+                    <option value="Jharkhand">Jharkhand</option>
+                    <option value="Karnataka">Karnataka</option>
+                    <option value="Kerala">Kerala</option>
+                    <option value="Madhya Pradesh">Madhya Pradesh</option>
+                    <option value="Maharashtra">Maharashtra</option>
+                    <option value="Manipur">Manipur</option>
+                    <option value="Meghalaya">Meghalaya</option>
+                    <option value="Mizoram">Mizoram</option>
+                    <option value="Nagaland">Nagaland</option>
+                    <option value="Odisha">Odisha</option>
+                    <option value="Punjab">Punjab</option>
+                    <option value="Rajasthan">Rajasthan</option>
+                    <option value="Sikkim">Sikkim</option>
+                    <option value="Tamil Nadu">Tamil Nadu</option>
+                    <option value="Telangana">Telangana</option>
+                    <option value="Tripura">Tripura</option>
+                    <option value="Uttar Pradesh">Uttar Pradesh</option>
+                    <option value="Uttarakhand">Uttarakhand</option>
+                    <option value="West Bengal">West Bengal</option>
+
+                    <option value="Andaman and Nicobar Islands">
+                      Andaman and Nicobar Islands
+                    </option>
+
+                    <option value="Chandigarh">
+                      Chandigarh
+                    </option>
+
+                    <option value="Dadra and Nagar Haveli and Daman and Diu">
+                      Dadra and Nagar Haveli and Daman and Diu
+                    </option>
+
+                    <option value="Delhi">
+                      Delhi
+                    </option>
+
+                    <option value="Jammu and Kashmir">
+                      Jammu and Kashmir
+                    </option>
+
+                    <option value="Ladakh">
+                      Ladakh
+                    </option>
+
+                    <option value="Lakshadweep">
+                      Lakshadweep
+                    </option>
+
+                    <option value="Puducherry">
+                      Puducherry
+                    </option>
+
+                  </select>
+
+                  {errors.state && (
+                    <p className="mt-2 text-xs text-red-500">
+                      {errors.state}
                     </p>
                   )}
 
