@@ -231,6 +231,88 @@ export default function BecomeAMentor() {
                 </div>
 
 
+                {/* CITY + STATE */}
+
+                <div className="grid gap-6 sm:grid-cols-2">
+
+                  <div>
+
+                    <label className="mb-2 block text-sm font-medium text-black/70">
+                      City <span className="text-black/40">*</span>
+                    </label>
+
+                    <input
+                      name="city"
+                      type="text"
+                      required
+                      placeholder="e.g. Bhubaneswar"
+                      className="w-full rounded-xl border border-black/10 bg-[#F8F6F1] px-4 py-3.5 text-sm outline-none transition placeholder:text-black/30 focus:border-black/30"
+                    />
+
+                  </div>
+
+
+                  <div>
+
+                    <label className="mb-2 block text-sm font-medium text-black/70">
+                      State <span className="text-black/40">*</span>
+                    </label>
+
+                    <select
+                      name="state"
+                      required
+                      defaultValue=""
+                      className="w-full rounded-xl border border-black/10 bg-[#F8F6F1] px-4 py-3.5 text-sm text-black/60 outline-none transition focus:border-black/30"
+                    >
+
+                      <option value="" disabled>
+                        Select your state
+                      </option>
+
+                      <option>Andhra Pradesh</option>
+                      <option>Arunachal Pradesh</option>
+                      <option>Assam</option>
+                      <option>Bihar</option>
+                      <option>Chhattisgarh</option>
+                      <option>Goa</option>
+                      <option>Gujarat</option>
+                      <option>Haryana</option>
+                      <option>Himachal Pradesh</option>
+                      <option>Jharkhand</option>
+                      <option>Karnataka</option>
+                      <option>Kerala</option>
+                      <option>Madhya Pradesh</option>
+                      <option>Maharashtra</option>
+                      <option>Manipur</option>
+                      <option>Meghalaya</option>
+                      <option>Mizoram</option>
+                      <option>Nagaland</option>
+                      <option>Odisha</option>
+                      <option>Punjab</option>
+                      <option>Rajasthan</option>
+                      <option>Sikkim</option>
+                      <option>Tamil Nadu</option>
+                      <option>Telangana</option>
+                      <option>Tripura</option>
+                      <option>Uttar Pradesh</option>
+                      <option>Uttarakhand</option>
+                      <option>West Bengal</option>
+                      <option>Andaman and Nicobar Islands</option>
+                      <option>Chandigarh</option>
+                      <option>Dadra and Nagar Haveli and Daman and Diu</option>
+                      <option>Delhi</option>
+                      <option>Jammu and Kashmir</option>
+                      <option>Ladakh</option>
+                      <option>Lakshadweep</option>
+                      <option>Puducherry</option>
+
+                    </select>
+
+                  </div>
+
+                </div>
+
+
                 {/* COMMUNITY STATUS */}
 
                 <div>
@@ -331,54 +413,54 @@ export default function BecomeAMentor() {
                 </div>
 
 
-               {/* HOW YOU'D LIKE TO CONTRIBUTE */}
+                {/* HOW YOU'D LIKE TO CONTRIBUTE */}
 
-<div>
+                <div>
 
-  <label className="mb-3 block text-sm font-medium text-black/70">
-    HOW YOU'D LIKE TO CONTRIBUTE{" "}
-    <span className="text-black/40">*</span>
-  </label>
+                  <label className="mb-3 block text-sm font-medium text-black/70">
+                    HOW YOU'D LIKE TO CONTRIBUTE{" "}
+                    <span className="text-black/40">*</span>
+                  </label>
 
-  <p className="mb-4 text-xs text-black/40">
-    Select all that apply.
-  </p>
+                  <p className="mb-4 text-xs text-black/40">
+                    Select all that apply.
+                  </p>
 
-  <div className="grid gap-3 sm:grid-cols-2">
+                  <div className="grid gap-3 sm:grid-cols-2">
 
-    {[
-      "1:1 Mentoring",
-      "Career Guidance",
-      "Workshops",
-      "Skill Sessions",
-      "Project Guidance",
-      "Community Sessions",
-      "Other",
-    ].map((option) => (
+                    {[
+                      "1:1 Mentoring",
+                      "Career Guidance",
+                      "Workshops",
+                      "Skill Sessions",
+                      "Project Guidance",
+                      "Community Sessions",
+                      "Other",
+                    ].map((option) => (
 
-      <label
-        key={option}
-        className="flex cursor-pointer items-center gap-3 rounded-xl border border-black/10 bg-[#F8F6F1] px-4 py-3.5 text-sm text-black/60 transition hover:border-black/20"
-      >
+                      <label
+                        key={option}
+                        className="flex cursor-pointer items-center gap-3 rounded-xl border border-black/10 bg-[#F8F6F1] px-4 py-3.5 text-sm text-black/60 transition hover:border-black/20"
+                      >
 
-        <input
-          type="checkbox"
-          name="contribution"
-          value={option}
-          className="h-4 w-4 accent-black"
-        />
+                        <input
+                          type="checkbox"
+                          name="contribution"
+                          value={option}
+                          className="h-4 w-4 accent-black"
+                        />
 
-        <span>
-          {option}
-        </span>
+                        <span>
+                          {option}
+                        </span>
 
-      </label>
+                      </label>
 
-    ))}
+                    ))}
 
-  </div>
+                  </div>
 
-</div>
+                </div>
 
 
                 {/* YEARS OF EXPERIENCE */}
