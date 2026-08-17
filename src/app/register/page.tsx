@@ -2,9 +2,14 @@
 
 import { useState } from "react";
 
+const GOOGLE_SCRIPT_URL =
+  "https://script.google.com/macros/s/AKfycbzOs_jlzPywJLhk3YOAyjLO5s72jLTO-Es3v2xEvVfsH7NbG5i1_omfUQxw1-yXpy5S4A/exec";
+
 export default function RegisterPage() {
   const [step, setStep] = useState(1);
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -18,13 +23,16 @@ export default function RegisterPage() {
     goal: "",
   });
 
+  // =========================
+  // UPDATE FIELD
+  // =========================
+
   const updateField = (field: string, value: string) => {
     setFormData((previous) => ({
       ...previous,
       [field]: value,
     }));
 
-    // Remove error as soon as user starts correcting the field
     setErrors((previous) => ({
       ...previous,
       [field]: "",
@@ -55,7 +63,8 @@ export default function RegisterPage() {
     if (!formData.mobile) {
       newErrors.mobile = "Please enter your mobile number.";
     } else if (!/^\d{10}$/.test(formData.mobile)) {
-      newErrors.mobile = "Mobile number must contain exactly 10 digits.";
+      newErrors.mobile =
+        "Mobile number must contain exactly 10 digits.";
     }
 
     if (!formData.email.trim()) {
@@ -87,11 +96,13 @@ export default function RegisterPage() {
     const newErrors: Record<string, string> = {};
 
     if (!formData.currentStatus) {
-      newErrors.currentStatus = "Please select where you are right now.";
+      newErrors.currentStatus =
+        "Please select where you are right now.";
     }
 
     if (!formData.interests.trim()) {
-      newErrors.interests = "Please tell us a little about your interests.";
+      newErrors.interests =
+        "Please tell us a little about your interests.";
     }
 
     setErrors(newErrors);
@@ -107,7 +118,8 @@ export default function RegisterPage() {
     const newErrors: Record<string, string> = {};
 
     if (!formData.goal.trim()) {
-      newErrors.goal = "Please tell us what you would like to achieve.";
+      newErrors.goal =
+        "Please tell us what you would like to achieve.";
     }
 
     setErrors(newErrors);
@@ -157,18 +169,137 @@ export default function RegisterPage() {
   };
 
   // =========================
-  // COMPLETE REGISTRATION
+  // SUBMIT TO GOOGLE SHEETS
   // =========================
 
-  const completeRegistration = () => {
+  const completeRegistration = async () => {
     if (!validateStep3()) {
       return;
     }
 
-    console.log("Registration data:", formData);
+    if (isSubmitting) {
+      return;
+    }
 
-    alert("Registration details are valid!");
+    setIsSubmitting(true);
+
+    try {
+      const body = new URLSearchParams();
+
+      body.append("name", formData.name);
+      body.append("age", formData.age);
+      body.append("mobile", formData.mobile);
+      body.append("email", formData.email);
+      body.append("city", formData.city);
+      body.append("state", formData.state);
+      body.append("currentStatus", formData.currentStatus);
+      body.append("interests", formData.interests);
+      body.append("goal", formData.goal);
+
+      await fetch(GOOGLE_SCRIPT_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: {
+          "Content-Type":
+            "application/x-www-form-urlencoded;charset=UTF-8",
+        },
+        body: body.toString(),
+      });
+
+      // Google Apps Script receives the request successfully.
+      setSubmitted(true);
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    } catch (error) {
+      console.error("Registration submission error:", error);
+
+      alert(
+        "Something went wrong while submitting your registration. Please try again."
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
+
+  // =========================
+  // SUCCESS SCREEN
+  // =========================
+
+  if (submitted) {
+    return (
+      <main className="min-h-screen bg-[#F8F6F1]">
+
+        {/* NAVIGATION */}
+
+        <header className="border-b border-black/5 bg-[#F8F6F1]/90">
+
+          <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 md:px-10 lg:px-12">
+
+            <a href="/" className="group">
+
+              <div className="text-2xl font-bold tracking-[-0.04em]">
+                NIRMAAN
+              </div>
+
+              <div className="mt-0.5 text-[9px] font-medium tracking-[0.25em] text-black/45">
+                LEARN • BUILD • BECOME
+              </div>
+
+            </a>
+
+          </nav>
+
+        </header>
+
+
+        {/* SUCCESS CONTENT */}
+
+        <div className="mx-auto flex min-h-[75vh] max-w-2xl items-center justify-center px-6 py-16">
+
+          <div className="w-full rounded-[2rem] border border-black/5 bg-white p-8 text-center shadow-sm md:p-12">
+
+            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-[#E9E4DA]">
+
+              <span className="text-2xl">
+                ✓
+              </span>
+
+            </div>
+
+            <p className="mt-8 text-xs font-medium uppercase tracking-[0.25em] text-black/40">
+              Registration complete
+            </p>
+
+            <h1 className="mt-4 text-4xl font-medium tracking-[-0.04em] md:text-5xl">
+
+              You're on your way.
+
+            </h1>
+
+            <p className="mx-auto mt-5 max-w-lg text-base leading-7 text-black/50">
+
+              Thank you for registering with Nirmaan. We've received your
+              information and will be in touch with you soon.
+
+            </p>
+
+            <a
+              href="/"
+              className="mt-8 inline-flex rounded-full bg-[#1D1D1B] px-7 py-4 text-sm font-medium text-white transition duration-300 hover:-translate-y-0.5 hover:bg-black"
+            >
+              Back to Nirmaan
+            </a>
+
+          </div>
+
+        </div>
+
+      </main>
+    );
+  }
 
   return (
     <main className="min-h-screen bg-[#F8F6F1]">
@@ -220,17 +351,22 @@ export default function RegisterPage() {
           </p>
 
           <h1 className="mt-5 text-4xl font-medium leading-tight tracking-[-0.04em] md:text-5xl">
+
             Let's get to know
+
             <br />
 
             <span className="font-serif italic font-normal">
               you.
             </span>
+
           </h1>
 
           <p className="mt-5 max-w-xl text-base leading-7 text-black/50">
+
             There are no right or wrong answers. Tell us a little about
             yourself so we can understand how Nirmaan can support you.
+
           </p>
 
         </div>
@@ -276,7 +412,6 @@ export default function RegisterPage() {
 
         <div className="rounded-[2rem] border border-black/5 bg-white p-7 shadow-sm md:p-10">
 
-
           {/* =========================
               STEP 1
           ========================= */}
@@ -295,7 +430,6 @@ export default function RegisterPage() {
 
 
               <div className="mt-8 space-y-6">
-
 
                 {/* NAME */}
 
@@ -342,9 +476,12 @@ export default function RegisterPage() {
                     pattern="[0-9]*"
                     value={formData.age}
                     onChange={(e) => {
-                      const value = e.target.value.replace(/\D/g, "");
+
+                      const value =
+                        e.target.value.replace(/\D/g, "");
 
                       updateField("age", value);
+
                     }}
                     placeholder="Your age"
                     className={`w-full rounded-xl border bg-[#F8F6F1] px-4 py-4 text-sm outline-none transition ${
@@ -378,9 +515,12 @@ export default function RegisterPage() {
                     maxLength={10}
                     value={formData.mobile}
                     onChange={(e) => {
-                      const value = e.target.value.replace(/\D/g, "");
+
+                      const value =
+                        e.target.value.replace(/\D/g, "");
 
                       updateField("mobile", value);
+
                     }}
                     placeholder="10-digit mobile number"
                     className={`w-full rounded-xl border bg-[#F8F6F1] px-4 py-4 text-sm outline-none transition ${
@@ -485,34 +625,117 @@ export default function RegisterPage() {
                       Select your state
                     </option>
 
-                    <option value="Andhra Pradesh">Andhra Pradesh</option>
-                    <option value="Arunachal Pradesh">Arunachal Pradesh</option>
-                    <option value="Assam">Assam</option>
-                    <option value="Bihar">Bihar</option>
-                    <option value="Chhattisgarh">Chhattisgarh</option>
-                    <option value="Goa">Goa</option>
-                    <option value="Gujarat">Gujarat</option>
-                    <option value="Haryana">Haryana</option>
-                    <option value="Himachal Pradesh">Himachal Pradesh</option>
-                    <option value="Jharkhand">Jharkhand</option>
-                    <option value="Karnataka">Karnataka</option>
-                    <option value="Kerala">Kerala</option>
-                    <option value="Madhya Pradesh">Madhya Pradesh</option>
-                    <option value="Maharashtra">Maharashtra</option>
-                    <option value="Manipur">Manipur</option>
-                    <option value="Meghalaya">Meghalaya</option>
-                    <option value="Mizoram">Mizoram</option>
-                    <option value="Nagaland">Nagaland</option>
-                    <option value="Odisha">Odisha</option>
-                    <option value="Punjab">Punjab</option>
-                    <option value="Rajasthan">Rajasthan</option>
-                    <option value="Sikkim">Sikkim</option>
-                    <option value="Tamil Nadu">Tamil Nadu</option>
-                    <option value="Telangana">Telangana</option>
-                    <option value="Tripura">Tripura</option>
-                    <option value="Uttar Pradesh">Uttar Pradesh</option>
-                    <option value="Uttarakhand">Uttarakhand</option>
-                    <option value="West Bengal">West Bengal</option>
+                    <option value="Andhra Pradesh">
+                      Andhra Pradesh
+                    </option>
+
+                    <option value="Arunachal Pradesh">
+                      Arunachal Pradesh
+                    </option>
+
+                    <option value="Assam">
+                      Assam
+                    </option>
+
+                    <option value="Bihar">
+                      Bihar
+                    </option>
+
+                    <option value="Chhattisgarh">
+                      Chhattisgarh
+                    </option>
+
+                    <option value="Goa">
+                      Goa
+                    </option>
+
+                    <option value="Gujarat">
+                      Gujarat
+                    </option>
+
+                    <option value="Haryana">
+                      Haryana
+                    </option>
+
+                    <option value="Himachal Pradesh">
+                      Himachal Pradesh
+                    </option>
+
+                    <option value="Jharkhand">
+                      Jharkhand
+                    </option>
+
+                    <option value="Karnataka">
+                      Karnataka
+                    </option>
+
+                    <option value="Kerala">
+                      Kerala
+                    </option>
+
+                    <option value="Madhya Pradesh">
+                      Madhya Pradesh
+                    </option>
+
+                    <option value="Maharashtra">
+                      Maharashtra
+                    </option>
+
+                    <option value="Manipur">
+                      Manipur
+                    </option>
+
+                    <option value="Meghalaya">
+                      Meghalaya
+                    </option>
+
+                    <option value="Mizoram">
+                      Mizoram
+                    </option>
+
+                    <option value="Nagaland">
+                      Nagaland
+                    </option>
+
+                    <option value="Odisha">
+                      Odisha
+                    </option>
+
+                    <option value="Punjab">
+                      Punjab
+                    </option>
+
+                    <option value="Rajasthan">
+                      Rajasthan
+                    </option>
+
+                    <option value="Sikkim">
+                      Sikkim
+                    </option>
+
+                    <option value="Tamil Nadu">
+                      Tamil Nadu
+                    </option>
+
+                    <option value="Telangana">
+                      Telangana
+                    </option>
+
+                    <option value="Tripura">
+                      Tripura
+                    </option>
+
+                    <option value="Uttar Pradesh">
+                      Uttar Pradesh
+                    </option>
+
+                    <option value="Uttarakhand">
+                      Uttarakhand
+                    </option>
+
+                    <option value="West Bengal">
+                      West Bengal
+                    </option>
 
                     <option value="Andaman and Nicobar Islands">
                       Andaman and Nicobar Islands
@@ -764,9 +987,18 @@ export default function RegisterPage() {
               <button
                 type="button"
                 onClick={completeRegistration}
-                className="rounded-full bg-[#1D1D1B] px-7 py-4 text-sm font-medium text-white transition duration-300 hover:-translate-y-0.5 hover:bg-black"
+                disabled={isSubmitting}
+                className={`rounded-full px-7 py-4 text-sm font-medium text-white transition duration-300 ${
+                  isSubmitting
+                    ? "cursor-not-allowed bg-black/40"
+                    : "bg-[#1D1D1B] hover:-translate-y-0.5 hover:bg-black"
+                }`}
               >
-                Complete Registration →
+
+                {isSubmitting
+                  ? "Submitting..."
+                  : "Complete Registration →"}
+
               </button>
 
             )}
@@ -779,8 +1011,10 @@ export default function RegisterPage() {
         {/* FOOTNOTE */}
 
         <p className="mt-8 text-center text-xs leading-5 text-black/30">
+
           Your information will only be used to understand how Nirmaan
           can support your journey.
+
         </p>
 
       </div>
