@@ -200,7 +200,8 @@ export default function RegisterPage() {
       method: "POST",
       mode: "no-cors",
       headers: {
-        "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+        "Content-Type":
+          "application/x-www-form-urlencoded;charset=UTF-8",
       },
       body: body.toString(),
     });
@@ -213,35 +214,16 @@ export default function RegisterPage() {
       top: 0,
       behavior: "smooth",
     });
-
   } catch (error) {
     console.error("Registration submission error:", error);
 
     alert(
       "Something went wrong while submitting your registration. Please try again."
     );
-
   } finally {
     setIsSubmitting(false);
   }
 };
-      // Google Apps Script receives the request successfully.
-      setSubmitted(true);
-
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth",
-      });
-    } catch (error) {
-      console.error("Registration submission error:", error);
-
-      alert(
-        "Something went wrong while submitting your registration. Please try again."
-      );
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
 
   // =========================
   // SUCCESS SCREEN
