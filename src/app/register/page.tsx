@@ -173,39 +173,58 @@ export default function RegisterPage() {
   // =========================
 
   const completeRegistration = async () => {
-    if (!validateStep3()) {
-      return;
-    }
+  if (!validateStep3()) {
+    return;
+  }
 
-    if (isSubmitting) {
-      return;
-    }
+  if (isSubmitting) {
+    return;
+  }
 
-    setIsSubmitting(true);
+  setIsSubmitting(true);
 
-    try {
-      const body = new URLSearchParams();
+  try {
+    const body = new URLSearchParams();
 
-      body.append("name", formData.name);
-      body.append("age", formData.age);
-      body.append("mobile", formData.mobile);
-      body.append("email", formData.email);
-      body.append("city", formData.city);
-      body.append("state", formData.state);
-      body.append("currentStatus", formData.currentStatus);
-      body.append("interests", formData.interests);
-      body.append("goal", formData.goal);
+    body.append("name", formData.name.trim());
+    body.append("age", formData.age);
+    body.append("mobile", formData.mobile);
+    body.append("email", formData.email.trim());
+    body.append("city", formData.city.trim());
+    body.append("state", formData.state);
+    body.append("currentStatus", formData.currentStatus);
+    body.append("interests", formData.interests.trim());
+    body.append("goal", formData.goal.trim());
 
-      await fetch(GOOGLE_SCRIPT_URL, {
-        method: "POST",
-        mode: "no-cors",
-        headers: {
-          "Content-Type":
-            "application/x-www-form-urlencoded;charset=UTF-8",
-        },
-        body: body.toString(),
-      });
+    await fetch(GOOGLE_SCRIPT_URL, {
+      method: "POST",
+      mode: "no-cors",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+      },
+      body: body.toString(),
+    });
 
+    console.log("Registration submitted:", formData);
+
+    setSubmitted(true);
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+
+  } catch (error) {
+    console.error("Registration submission error:", error);
+
+    alert(
+      "Something went wrong while submitting your registration. Please try again."
+    );
+
+  } finally {
+    setIsSubmitting(false);
+  }
+};
       // Google Apps Script receives the request successfully.
       setSubmitted(true);
 
