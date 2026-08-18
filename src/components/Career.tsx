@@ -279,12 +279,11 @@ export default function Career() {
             Nirmaan can help you become ready.
           </p>
 
-          <a
-            href="#start"
-            className="inline-flex w-fit shrink-0 items-center rounded-full bg-[#1D1D1B] px-7 py-4 text-sm font-medium text-white transition duration-300 hover:-translate-y-1 hover:bg-black"
-          >
-            Start Building Your Career →
-          </a>
+          <div
+  className="inline-flex w-fit shrink-0 items-center rounded-full border border-black/10 bg-black/5 px-7 py-4 text-sm font-medium text-black/45"
+>
+  Launching Soon
+</div>
 
         </div>
 
