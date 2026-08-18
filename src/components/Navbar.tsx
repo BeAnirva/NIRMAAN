@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import LanguageSelector from "./LanguageSelector";
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -126,7 +127,11 @@ export default function Navbar() {
           </a>
 
         </div>
+        {/* LANGUAGE SELECTOR */}
 
+<LanguageSelector />
+
+</div>
 
         {/* DESKTOP CTA */}
 
