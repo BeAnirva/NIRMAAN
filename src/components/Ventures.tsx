@@ -230,7 +230,7 @@ export default function Ventures() {
 
 
             <a
-              href="#start"
+              href="/register"
               className="mt-8 inline-flex items-center rounded-full bg-[#1D1D1B] px-7 py-4 text-sm font-medium text-white transition duration-300 hover:-translate-y-1 hover:bg-black"
             >
               Tell Us About Your Idea →
