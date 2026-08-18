@@ -273,7 +273,14 @@ export default function Navbar() {
             >
               FAQ
             </a>
+            
+{/* MOBILE LANGUAGE SELECTOR */}
 
+<div className="pt-2">
+
+  <LanguageSelector />
+
+</div>
 
             {/* MOBILE CTA */}
 
