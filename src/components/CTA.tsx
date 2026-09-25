@@ -1,4 +1,10 @@
+"use client";
+
+import { useLanguage } from "./LanguageProvider";
+
 export default function CTA() {
+  const { t } = useLanguage();
+
   return (
     <section
       id="start"
@@ -18,7 +24,7 @@ export default function CTA() {
         {/* TOP LABEL */}
 
         <p className="text-xs font-medium uppercase tracking-[0.25em] text-black/35">
-          Your next chapter
+          {t.cta.label}
         </p>
 
 
@@ -30,13 +36,13 @@ export default function CTA() {
 
             <h2 className="max-w-5xl text-5xl font-medium leading-[0.98] tracking-[-0.055em] md:text-6xl lg:text-8xl">
 
-              Ready to build
+              {t.cta.titleLine1}
               <br />
 
-              your{" "}
+              {t.cta.titleLine2}
 
               <span className="font-serif italic font-normal">
-                future?
+                {t.cta.titleEmphasis}
               </span>
 
             </h2>
@@ -48,9 +54,7 @@ export default function CTA() {
 
             <p className="max-w-md text-base leading-7 text-black/55 md:text-lg md:leading-8">
 
-              You don't need to have everything figured out.
-              Tell us where you are today, and we'll help you
-              explore where you could go next.
+              {t.cta.description}
 
             </p>
 
@@ -68,21 +72,19 @@ export default function CTA() {
             <div>
 
               <p className="text-xs uppercase tracking-[0.2em] text-white/30">
-                Start with a conversation
+                {t.cta.cardLabel}
               </p>
 
               <h3 className="mt-4 max-w-2xl text-2xl font-medium leading-tight tracking-[-0.025em] md:text-3xl">
 
-                Take the first step.
-                We'll help you figure out the rest.
+                {t.cta.cardTitle}
 
               </h3>
 
 
               <p className="mt-5 max-w-xl text-sm leading-6 text-white/45">
 
-                Registration is free. Share a little about yourself,
-                what you'd like to learn and where you'd like to go.
+                {t.cta.cardDescription}
 
               </p>
 
@@ -93,7 +95,7 @@ export default function CTA() {
               href="/register"
               className="inline-flex w-fit shrink-0 items-center justify-center rounded-full bg-white px-8 py-4 text-sm font-medium text-[#1D1D1B] transition duration-300 hover:-translate-y-1 hover:bg-[#F8F6F1]"
             >
-              Start Your Journey →
+              {t.cta.button}
             </a>
 
           </div>
@@ -105,15 +107,12 @@ export default function CTA() {
 
         <div className="mt-8 flex flex-wrap gap-x-6 gap-y-3 text-xs text-black/40">
 
-          <span>Free to register</span>
-
-          <span>•</span>
-
-          <span>Learn at your pace</span>
-
-          <span>•</span>
-
-          <span>Career & entrepreneurship support</span>
+          {t.cta.trust.map((item, index) => (
+            <span key={item} className="contents">
+              {index > 0 && <span>•</span>}
+              <span>{item}</span>
+            </span>
+          ))}
 
         </div>
 

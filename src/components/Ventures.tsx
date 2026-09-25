@@ -1,40 +1,12 @@
-const ventureSteps = [
-  {
-    number: "01",
-    title: "Explore Your Idea",
-    description:
-      "Turn your thoughts into a clear problem, idea or opportunity worth exploring.",
-  },
-  {
-    number: "02",
-    title: "Validate",
-    description:
-      "Understand who your idea is for, what they need and whether your solution can create value.",
-  },
-  {
-    number: "03",
-    title: "Build",
-    description:
-      "Create a simple version of your idea and learn how to test, improve and communicate it.",
-  },
-  {
-    number: "04",
-    title: "Launch",
-    description:
-      "Get guidance on taking your first real steps toward customers, revenue or further support.",
-  },
-];
+"use client";
 
-const ventureSupport = [
-  "Idea validation",
-  "Market research",
-  "Business model",
-  "Basic finance",
-  "Marketing",
-  "Digital presence",
-];
+import { useLanguage } from "./LanguageProvider";
+import { venturesContent } from "@/lib/content/ventures";
 
 export default function Ventures() {
+  const { language } = useLanguage();
+  const c = venturesContent[language];
+
   return (
     <section
       id="ventures"
@@ -49,19 +21,19 @@ export default function Ventures() {
           <div>
 
             <p className="mb-6 text-xs font-medium uppercase tracking-[0.25em] text-white/35">
-              Nirmaan Ventures
+              {c.label}
             </p>
 
             <h2 className="max-w-2xl text-4xl font-medium leading-[1.05] tracking-[-0.045em] md:text-5xl lg:text-6xl">
 
-              Have an idea?
+              {c.titleLine1}
 
               <br />
 
-              Let's{" "}
+              {c.titleLine2}
 
               <span className="font-serif italic font-normal text-white/70">
-                build it.
+                {c.titleEmphasis}
               </span>
 
             </h2>
@@ -73,11 +45,7 @@ export default function Ventures() {
 
             <p className="max-w-xl text-base leading-7 text-white/50 md:text-lg md:leading-8">
 
-              You don't need a business degree, a big team or
-              a perfect plan to explore entrepreneurship.
-
-              If you have an idea and the willingness to learn,
-              Nirmaan can help you take the first step.
+              {c.description}
 
             </p>
 
@@ -92,11 +60,10 @@ export default function Ventures() {
 
           <p className="max-w-4xl text-3xl font-medium leading-tight tracking-[-0.035em] md:text-5xl">
 
-            An idea becomes an opportunity
-            when you are willing to{" "}
+            {c.statement}
 
             <span className="font-serif italic font-normal text-white/60">
-              test it, learn from it and keep building.
+              {c.statementEmphasis}
             </span>
 
           </p>
@@ -111,11 +78,11 @@ export default function Ventures() {
           <div className="mb-8 flex items-center justify-between">
 
             <p className="text-xs font-medium uppercase tracking-[0.2em] text-white/35">
-              From idea to action
+              {c.journeyLabel}
             </p>
 
             <span className="hidden text-xs text-white/25 md:block">
-              One step at a time.
+              {c.journeyNote}
             </span>
 
           </div>
@@ -123,10 +90,10 @@ export default function Ventures() {
 
           <div className="grid border-t border-white/10 md:grid-cols-2 lg:grid-cols-4">
 
-            {ventureSteps.map((step, index) => (
+            {c.steps.map((step, index) => (
 
               <div
-                key={step.number}
+                key={index}
                 className={`py-8 md:px-7 md:py-10 ${
                   index !== 0
                     ? "border-t border-white/10 md:border-l md:border-t-0"
@@ -135,7 +102,7 @@ export default function Ventures() {
               >
 
                 <span className="text-xs font-medium tracking-[0.2em] text-white/25">
-                  {step.number}
+                  {String(index + 1).padStart(2, "0")}
                 </span>
 
 
@@ -166,18 +133,17 @@ export default function Ventures() {
           <div className="rounded-[2rem] bg-[#2A2A28] p-8 md:p-10">
 
             <p className="text-xs uppercase tracking-[0.2em] text-white/30">
-              What we can help with
+              {c.supportLabel}
             </p>
 
             <h3 className="mt-5 text-2xl font-medium tracking-[-0.025em]">
-              You bring the curiosity.
-              We'll help with the process.
+              {c.supportTitle}
             </h3>
 
 
             <div className="mt-8 flex flex-wrap gap-2">
 
-              {ventureSupport.map((item) => (
+              {c.support.map((item) => (
 
                 <span
                   key={item}
@@ -202,12 +168,12 @@ export default function Ventures() {
               <div>
 
                 <p className="text-xs uppercase tracking-[0.2em] text-black/35">
-                  Have an idea?
+                  {c.ideaLabel}
                 </p>
 
                 <h3 className="mt-4 max-w-lg text-3xl font-medium leading-tight tracking-[-0.035em] md:text-4xl">
 
-                  Your idea doesn't have to stay in your notebook.
+                  {c.ideaTitle}
 
                 </h3>
 
@@ -223,8 +189,7 @@ export default function Ventures() {
 
             <p className="mt-6 max-w-xl text-sm leading-6 text-black/50">
 
-              Start with a conversation. Tell us what you're thinking,
-              what you've tried and what you'd like to build.
+              {c.ideaDescription}
 
             </p>
 
@@ -233,7 +198,7 @@ export default function Ventures() {
               href="/register"
               className="mt-8 inline-flex items-center rounded-full bg-[#1D1D1B] px-7 py-4 text-sm font-medium text-white transition duration-300 hover:-translate-y-1 hover:bg-black"
             >
-              Tell Us About Your Idea →
+              {c.ideaButton}
             </a>
 
           </div>

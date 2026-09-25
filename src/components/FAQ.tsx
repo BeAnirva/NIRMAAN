@@ -2,50 +2,13 @@
 
 import { useState } from "react";
 
-const faqs = [
-  {
-    question: "Is Nirmaan really free?",
-    answer:
-      "Yes. Registration and access to Nirmaan's core learning, guidance and support are completely free.",
-  },
-  {
-    question: "Who can register?",
-    answer:
-      "Anyone who wants to learn, develop practical skills, explore career opportunities or work towards building something of their own can register.",
-  },
-  {
-    question: "What if I don't know what I want to do yet?",
-    answer:
-      "That's completely okay. You don't need to have a clear career or business plan before joining. Nirmaan is designed to help you understand your options and figure out your next step.",
-  },
-  {
-    question: "What kind of support will I get?",
-    answer:
-      "Depending on your goals, Nirmaan can help you explore learning resources, practical skills, career opportunities, mentorship and entrepreneurship.",
-  },
-  {
-    question: "Do I need any prior experience or qualifications?",
-    answer:
-      "No. You can start from where you are. Your current experience, education and skills will help us understand how best to guide you.",
-  },
-  {
-    question: "How does registration work?",
-    answer:
-      "You'll answer a few simple questions about yourself, your current situation and what you'd like to achieve. Once you register, we'll use that information to understand how Nirmaan can support you.",
-  },
-  {
-    question: "How soon will someone contact me?",
-    answer:
-      "After registration, our team will review your information and reach out regarding the next steps.",
-  },
-  {
-    question: "Can I register if I'm still studying?",
-    answer:
-      "Yes. Students are welcome to register and explore learning, career and skill-building opportunities.",
-  },
-];
+import { useLanguage } from "./LanguageProvider";
+import { faqContent } from "@/lib/content/faq";
 
 export default function FAQ() {
+  const { language } = useLanguage();
+  const c = faqContent[language];
+
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   const toggleFAQ = (index: number) => {
@@ -61,20 +24,19 @@ export default function FAQ() {
         <div className="max-w-3xl">
 
           <p className="mb-6 text-xs font-medium uppercase tracking-[0.25em] text-black/40">
-            Questions
+            {c.label}
           </p>
 
           <h1 className="text-4xl font-medium leading-tight tracking-[-0.04em] md:text-5xl lg:text-6xl">
-            Before you
+            {c.titleLine1}
             <br />
             <span className="font-serif italic font-normal">
-              register.
+              {c.titleEmphasis}
             </span>
           </h1>
 
           <p className="mt-6 max-w-xl text-base leading-7 text-black/50 md:text-lg md:leading-8">
-            A few things you might want to know before taking your first
-            step with Nirmaan.
+            {c.description}
           </p>
 
         </div>
@@ -84,13 +46,13 @@ export default function FAQ() {
 
         <div className="mt-16 border-t border-black/10">
 
-          {faqs.map((faq, index) => {
+          {c.faqs.map((faq, index) => {
 
             const isOpen = openIndex === index;
 
             return (
               <div
-                key={faq.question}
+                key={index}
                 className="border-b border-black/10"
               >
 
@@ -154,15 +116,15 @@ export default function FAQ() {
             <div>
 
               <p className="text-xs font-medium uppercase tracking-[0.2em] text-black/35">
-                Still unsure?
+                {c.stillUnsure}
               </p>
 
               <h2 className="mt-3 text-2xl font-medium tracking-[-0.025em] md:text-3xl">
-                You don't need to have all the answers.
+                {c.bottomTitle}
               </h2>
 
               <p className="mt-3 max-w-xl text-sm leading-6 text-black/50 md:text-base">
-                Start where you are. We'll help you figure out the next step.
+                {c.bottomText}
               </p>
 
             </div>
@@ -172,7 +134,7 @@ export default function FAQ() {
               href="/register"
               className="inline-flex w-fit shrink-0 items-center justify-center rounded-full bg-[#1D1D1B] px-7 py-4 text-sm font-medium text-white transition duration-300 hover:-translate-y-1 hover:bg-black"
             >
-              Start Your Journey →
+              {c.button}
             </a>
 
           </div>

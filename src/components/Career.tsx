@@ -1,31 +1,12 @@
-const careerSteps = [
-  {
-    number: "01",
-    title: "Build Skills",
-    description:
-      "Develop practical skills that match the kind of work you want to pursue.",
-  },
-  {
-    number: "02",
-    title: "Build Your Profile",
-    description:
-      "Create a strong resume, portfolio and professional profile that represent what you can do.",
-  },
-  {
-    number: "03",
-    title: "Practice",
-    description:
-      "Work on projects, practice interviews and build the confidence to perform in real situations.",
-  },
-  {
-    number: "04",
-    title: "Find Opportunities",
-    description:
-      "Discover internships, jobs, apprenticeships and other opportunities that can help you take your next step.",
-  },
-];
+"use client";
+
+import { useLanguage } from "./LanguageProvider";
+import { careerContent } from "@/lib/content/career";
 
 export default function Career() {
+  const { language } = useLanguage();
+  const c = careerContent[language];
+
   return (
     <section
       className="bg-[#F8F6F1] px-6 py-24 md:px-10 md:py-32 lg:px-12"
@@ -39,18 +20,18 @@ export default function Career() {
           <div>
 
             <p className="mb-6 text-xs font-medium uppercase tracking-[0.25em] text-black/40">
-              Career readiness
+              {c.label}
             </p>
 
             <h2 className="max-w-2xl text-4xl font-medium leading-[1.05] tracking-[-0.045em] md:text-5xl lg:text-6xl">
 
-              From learning
+              {c.titleLine1}
               <br />
 
-              to{" "}
+              {c.titleLine2}
 
               <span className="font-serif italic font-normal">
-                earning.
+                {c.titleEmphasis}
               </span>
 
             </h2>
@@ -62,10 +43,7 @@ export default function Career() {
 
             <p className="max-w-xl text-base leading-7 text-black/55 md:text-lg md:leading-8">
 
-              Learning a skill is only the beginning.
-              We help you turn what you learn into something
-              you can demonstrate, communicate and use
-              to pursue real opportunities.
+              {c.description}
 
             </p>
 
@@ -85,17 +63,17 @@ export default function Career() {
             <div>
 
               <p className="text-xs uppercase tracking-[0.2em] text-white/35">
-                Your career journey
+                {c.journeyLabel}
               </p>
 
               <h3 className="mt-4 text-2xl font-medium tracking-[-0.025em] md:text-3xl">
-                Learn → Prepare → Apply → Grow
+                {c.journeyTitle}
               </h3>
 
             </div>
 
             <span className="text-sm text-white/30">
-              One step at a time.
+              {c.journeyNote}
             </span>
 
           </div>
@@ -105,10 +83,10 @@ export default function Career() {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4">
 
-            {careerSteps.map((step, index) => (
+            {c.steps.map((step, index) => (
 
               <div
-                key={step.number}
+                key={index}
                 className={`relative py-10 md:px-7 ${
                   index !== 0
                     ? "border-t border-white/10 md:border-l md:border-t-0"
@@ -121,10 +99,10 @@ export default function Career() {
                 <div className="flex items-center justify-between">
 
                   <span className="text-xs font-medium tracking-[0.2em] text-white/30">
-                    {step.number}
+                    {String(index + 1).padStart(2, "0")}
                   </span>
 
-                  {index < careerSteps.length - 1 && (
+                  {index < c.steps.length - 1 && (
                     <span className="hidden text-white/20 lg:block">
                       →
                     </span>
@@ -165,11 +143,11 @@ export default function Career() {
               <div>
 
                 <p className="text-xs uppercase tracking-[0.2em] text-black/30">
-                  Build your profile
+                  {c.profileLabel}
                 </p>
 
                 <h3 className="mt-4 text-2xl font-medium tracking-[-0.025em]">
-                  Show the world what you can do.
+                  {c.profileTitle}
                 </h3>
 
               </div>
@@ -190,7 +168,7 @@ export default function Career() {
                 </span>
 
                 <span className="text-sm text-black/60">
-                  Resume building
+                  {c.profileItems[0]}
                 </span>
 
               </div>
@@ -203,7 +181,7 @@ export default function Career() {
                 </span>
 
                 <span className="text-sm text-black/60">
-                  Portfolio development
+                  {c.profileItems[1]}
                 </span>
 
               </div>
@@ -216,7 +194,7 @@ export default function Career() {
                 </span>
 
                 <span className="text-sm text-black/60">
-                  Interview preparation
+                  {c.profileItems[2]}
                 </span>
 
               </div>
@@ -231,37 +209,29 @@ export default function Career() {
           <div className="rounded-[2rem] bg-[#E9E4DA] p-8 md:p-10">
 
             <p className="text-xs uppercase tracking-[0.2em] text-black/30">
-              Find opportunities
+              {c.opportunitiesLabel}
             </p>
 
             <h3 className="mt-4 text-2xl font-medium tracking-[-0.025em]">
-              Your first opportunity can change what's possible.
+              {c.opportunitiesTitle}
             </h3>
 
 
             <p className="mt-5 max-w-md text-sm leading-6 text-black/50">
-              We'll help you prepare for and discover opportunities
-              that match your skills, interests and goals.
+              {c.opportunitiesDescription}
             </p>
 
 
             <div className="mt-8 flex flex-wrap gap-2">
 
-              <span className="rounded-full bg-white/70 px-4 py-2 text-xs text-black/50">
-                Internships
-              </span>
-
-              <span className="rounded-full bg-white/70 px-4 py-2 text-xs text-black/50">
-                Jobs
-              </span>
-
-              <span className="rounded-full bg-white/70 px-4 py-2 text-xs text-black/50">
-                Apprenticeships
-              </span>
-
-              <span className="rounded-full bg-white/70 px-4 py-2 text-xs text-black/50">
-                Freelancing
-              </span>
+              {c.opportunityTags.map((tag) => (
+                <span
+                  key={tag}
+                  className="rounded-full bg-white/70 px-4 py-2 text-xs text-black/50"
+                >
+                  {tag}
+                </span>
+              ))}
 
             </div>
 
@@ -275,14 +245,13 @@ export default function Career() {
         <div className="mt-12 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
 
           <p className="max-w-xl text-sm leading-6 text-black/40">
-            You don't need to be job-ready today.
-            Nirmaan can help you become ready.
+            {c.bottomText}
           </p>
 
           <div
   className="inline-flex w-fit shrink-0 items-center rounded-full border border-black/10 bg-black/5 px-7 py-4 text-sm font-medium text-black/45"
 >
-  Launching Soon
+  {c.launchingSoon}
 </div>
 
         </div>

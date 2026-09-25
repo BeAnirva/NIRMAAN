@@ -2,10 +2,12 @@
 
 import { useState } from "react";
 import LanguageSelector from "./LanguageSelector";
+import { useLanguage } from "./LanguageProvider";
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [exploreOpen, setExploreOpen] = useState(false);
+  const { t } = useLanguage();
 
   return (
     <header className="relative z-50 border-b border-black/5 bg-[#F8F6F1]/90 backdrop-blur-md">
@@ -21,7 +23,7 @@ export default function Navbar() {
           </div>
 
           <div className="mt-0.5 text-[9px] font-medium tracking-[0.25em] text-black/45">
-            LEARN • BUILD • BECOME
+            {t.nav.tagline}
           </div>
 
         </a>
@@ -37,7 +39,7 @@ export default function Navbar() {
             href="/"
             className="text-sm text-black/65 transition hover:text-black"
           >
-            Home
+            {t.nav.home}
           </a>
 
 
@@ -47,7 +49,7 @@ export default function Navbar() {
             href="/#journey"
             className="text-sm text-black/65 transition hover:text-black"
           >
-            How It Works
+            {t.nav.howItWorks}
           </a>
 
 
@@ -59,7 +61,7 @@ export default function Navbar() {
               onClick={() => setExploreOpen(!exploreOpen)}
               className="flex items-center gap-1 text-sm text-black/65 transition hover:text-black"
             >
-              Explore
+              {t.nav.explore}
 
               <span
                 className={`text-[10px] transition-transform duration-200 ${
@@ -83,7 +85,7 @@ export default function Navbar() {
                   className="block rounded-xl px-4 py-3 text-sm text-black/70 transition hover:bg-[#F8F6F1] hover:text-black"
                   onClick={() => setExploreOpen(false)}
                 >
-                  Learning
+                  {t.nav.learning}
                 </a>
 
                 <a
@@ -91,7 +93,7 @@ export default function Navbar() {
                   className="block rounded-xl px-4 py-3 text-sm text-black/70 transition hover:bg-[#F8F6F1] hover:text-black"
                   onClick={() => setExploreOpen(false)}
                 >
-                  Career
+                  {t.nav.career}
                 </a>
 
                 <a
@@ -99,7 +101,7 @@ export default function Navbar() {
                   className="block rounded-xl px-4 py-3 text-sm text-black/70 transition hover:bg-[#F8F6F1] hover:text-black"
                   onClick={() => setExploreOpen(false)}
                 >
-                  Ventures
+                  {t.nav.ventures}
                 </a>
 
                 <a
@@ -107,7 +109,7 @@ export default function Navbar() {
                   className="block rounded-xl px-4 py-3 text-sm text-black/70 transition hover:bg-[#F8F6F1] hover:text-black"
                   onClick={() => setExploreOpen(false)}
                 >
-                  Become a Mentor
+                  {t.nav.mentorship}
                 </a>
 
               </div>
@@ -123,7 +125,7 @@ export default function Navbar() {
             href="/faq"
             className="text-sm text-black/65 transition hover:text-black"
           >
-            FAQ
+            {t.nav.faq}
           </a>
 
         </div>
@@ -138,7 +140,7 @@ export default function Navbar() {
           href="/register"
           className="hidden rounded-full bg-[#1D1D1B] px-6 py-3 text-sm font-medium text-white transition duration-300 hover:-translate-y-0.5 hover:bg-black md:block"
         >
-          Start Your Journey →
+          {t.nav.startJourney}
         </a>
 
 
@@ -147,7 +149,7 @@ export default function Navbar() {
         <button
           onClick={() => setMenuOpen(!menuOpen)}
           className="flex h-10 w-10 items-center justify-center rounded-full border border-black/10 md:hidden"
-          aria-label="Toggle menu"
+          aria-label={t.nav.toggleMenu}
         >
 
           <div className="space-y-1.5">
@@ -186,7 +188,7 @@ export default function Navbar() {
               onClick={() => setMenuOpen(false)}
               className="text-base text-black/70"
             >
-              Home
+              {t.nav.home}
             </a>
 
 
@@ -197,7 +199,7 @@ export default function Navbar() {
               onClick={() => setMenuOpen(false)}
               className="text-base text-black/70"
             >
-              How It Works
+              {t.nav.howItWorks}
             </a>
 
 
@@ -207,7 +209,7 @@ export default function Navbar() {
               onClick={() => setExploreOpen(!exploreOpen)}
               className="flex items-center justify-between text-left text-base text-black/70"
             >
-              <span>Explore</span>
+              <span>{t.nav.explore}</span>
 
               <span
                 className={`text-xs transition-transform ${
@@ -231,7 +233,7 @@ export default function Navbar() {
                   onClick={() => setMenuOpen(false)}
                   className="text-sm text-black/60"
                 >
-                  Learning
+                  {t.nav.learning}
                 </a>
 
                 <a
@@ -239,7 +241,7 @@ export default function Navbar() {
                   onClick={() => setMenuOpen(false)}
                   className="text-sm text-black/60"
                 >
-                  Career
+                  {t.nav.career}
                 </a>
 
                 <a
@@ -247,7 +249,7 @@ export default function Navbar() {
                   onClick={() => setMenuOpen(false)}
                   className="text-sm text-black/60"
                 >
-                  Ventures
+                  {t.nav.ventures}
                 </a>
 
                 <a
@@ -255,7 +257,7 @@ export default function Navbar() {
                   onClick={() => setMenuOpen(false)}
                   className="text-sm text-black/60"
                 >
-                  Mentorship
+                  {t.nav.mentorship}
                 </a>
 
               </div>
@@ -270,7 +272,7 @@ export default function Navbar() {
               onClick={() => setMenuOpen(false)}
               className="text-base text-black/70"
             >
-              FAQ
+              {t.nav.faq}
             </a>
             
 {/* MOBILE LANGUAGE SELECTOR */}
@@ -288,7 +290,7 @@ export default function Navbar() {
               onClick={() => setMenuOpen(false)}
               className="mt-2 inline-flex w-fit rounded-full bg-[#1D1D1B] px-6 py-3 text-sm font-medium text-white"
             >
-              Start Your Journey →
+              {t.nav.startJourney}
             </a>
 
           </div>

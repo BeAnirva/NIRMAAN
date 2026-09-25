@@ -1,4 +1,10 @@
+"use client";
+
+import { useLanguage } from "./LanguageProvider";
+
 export default function Hero() {
+  const { t } = useLanguage();
+
   return (
     <section
       id="home"
@@ -18,7 +24,7 @@ export default function Hero() {
             <span className="h-2 w-2 shrink-0 rounded-full bg-[#6D8068]" />
 
             <span className="text-xs font-medium uppercase tracking-[0.18em] text-black/55">
-              Your future starts here
+              {t.hero.eyebrow}
             </span>
 
           </div>
@@ -29,12 +35,12 @@ export default function Hero() {
 
             {/* First line */}
             <span className="block md:whitespace-nowrap">
-              Your next chapter,
+              {t.hero.titleLine1}
             </span>
 
             {/* Second line */}
             <span className="block font-serif italic font-normal">
-              written by you.
+              {t.hero.titleLine2}
             </span>
 
           </h1>
@@ -42,8 +48,7 @@ export default function Hero() {
 
           {/* DESCRIPTION */}
           <p className="mt-7 max-w-xl text-base leading-7 text-black/60 sm:mt-8 md:text-lg md:leading-8">
-            A place to start where you are, discover what you're
-            capable of, and take your next step with someone beside you.
+            {t.hero.description}
           </p>
 
 
@@ -55,7 +60,7 @@ export default function Hero() {
               href="/register"
               className="group flex w-full min-w-0 items-center justify-center gap-2 rounded-full bg-[#1D1D1B] px-5 py-4 text-sm font-medium text-white transition duration-300 hover:-translate-y-1 hover:bg-black sm:inline-flex sm:w-auto sm:px-7"
             >
-              <span>Start Your Journey</span>
+              <span>{t.hero.primaryCta}</span>
 
               <span className="shrink-0 transition-transform duration-300 group-hover:translate-x-1">
                 →
@@ -68,7 +73,7 @@ export default function Hero() {
               href="#programs"
               className="flex w-full min-w-0 items-center justify-center rounded-full border border-black/15 bg-white/50 px-5 py-4 text-sm font-medium text-black transition duration-300 hover:-translate-y-1 hover:bg-white sm:inline-flex sm:w-auto sm:px-7"
             >
-              Explore Nirmaan
+              {t.hero.secondaryCta}
             </a>
 
           </div>
@@ -77,15 +82,12 @@ export default function Hero() {
           {/* TRUST LINE */}
           <div className="mt-9 flex flex-wrap gap-x-5 gap-y-2 text-xs text-black/40 sm:mt-10 sm:gap-x-6">
 
-            <span>100% Free</span>
-
-            <span>•</span>
-
-            <span>Practical Learning</span>
-
-            <span>•</span>
-
-            <span>Mentorship</span>
+            {t.hero.trust.map((item, index) => (
+              <span key={item} className="contents">
+                {index > 0 && <span>•</span>}
+                <span>{item}</span>
+              </span>
+            ))}
 
           </div>
 
@@ -100,7 +102,7 @@ export default function Hero() {
             {/* HERO IMAGE */}
             <img
               src="/image/nirmaan-hero.jpg"
-              alt="A young person beginning their journey"
+              alt={t.hero.imageAlt}
               className="h-full w-full object-cover"
             />
 
@@ -115,7 +117,7 @@ export default function Hero() {
             </p>
 
             <p className="mt-2 text-sm font-medium leading-6">
-              Start where you are. Take the next step.
+              {t.hero.cardText}
             </p>
 
           </div>

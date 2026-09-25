@@ -2,37 +2,16 @@
 
 import { useEffect, useRef, useState } from "react";
 
-const languages = [
-  {
-    code: "en",
-    label: "English",
-    nativeLabel: "English",
-  },
-  {
-    code: "hi",
-    label: "Hindi",
-    nativeLabel: "हिन्दी",
-  },
-  {
-    code: "or",
-    label: "Odia",
-    nativeLabel: "ଓଡ଼ିଆ",
-  },
-];
+import { useLanguage } from "./LanguageProvider";
+import { languages, type Language } from "@/lib/translations";
+
+const languageCodes = Object.keys(languages) as Language[];
 
 export default function LanguageSelector() {
-  const [language, setLanguage] = useState("en");
+  const { language, setLanguage, t } = useLanguage();
   const [open, setOpen] = useState(false);
 
   const selectorRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const savedLanguage = localStorage.getItem("nirmaan-language");
-
-    if (savedLanguage) {
-      setLanguage(savedLanguage);
-    }
-  }, []);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -51,22 +30,10 @@ export default function LanguageSelector() {
     };
   }, []);
 
-  const handleLanguageChange = (code: string) => {
+  const handleLanguageChange = (code: Language) => {
     setLanguage(code);
-
-    localStorage.setItem("nirmaan-language", code);
-
-    window.dispatchEvent(
-      new CustomEvent("nirmaan-language-change", {
-        detail: code,
-      })
-    );
-
     setOpen(false);
   };
-
-  const selectedLanguage =
-    languages.find((item) => item.code === language) || languages[0];
 
   return (
     <div
@@ -79,11 +46,11 @@ export default function LanguageSelector() {
         type="button"
         onClick={() => setOpen((previous) => !previous)}
         className="flex items-center gap-2 rounded-full border border-black/10 bg-white/50 px-4 py-2 text-xs font-medium text-black/60 transition hover:border-black/20 hover:bg-white"
-        aria-label="Select language"
+        aria-label={t.language.select}
         aria-expanded={open}
       >
         <span>
-          {selectedLanguage.code.toUpperCase()}
+          {language.toUpperCase()}
         </span>
 
         <span
@@ -102,26 +69,27 @@ export default function LanguageSelector() {
 
           <div className="px-3 py-2">
             <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-black/30">
-              Choose language
+              {t.language.choose}
             </p>
           </div>
 
-          {languages.map((item) => (
+          {languageCodes.map((code) => (
             <button
-              key={item.code}
+              key={code}
               type="button"
-              onClick={() => handleLanguageChange(item.code)}
+              lang={code}
+              onClick={() => handleLanguageChange(code)}
               className={`flex w-full items-center justify-between rounded-xl px-3 py-3 text-left text-sm transition ${
-                language === item.code
+                language === code
                   ? "bg-[#F5F2EC] text-black"
                   : "text-black/60 hover:bg-[#F8F6F1] hover:text-black"
               }`}
             >
               <span>
-                {item.nativeLabel}
+                {languages[code].nativeName}
               </span>
 
-              {language === item.code && (
+              {language === code && (
                 <span className="text-xs">
                   ✓
                 </span>

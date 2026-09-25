@@ -1,31 +1,12 @@
-const stories = [
-  {
-    number: "01",
-    category: "CAREER",
-    quote:
-      "I didn't know where to start. Nirmaan helped me understand what I could learn and what I could become.",
-    name: "Participant Story",
-    detail: "Career journey",
-  },
-  {
-    number: "02",
-    category: "LEARNING",
-    quote:
-      "For the first time, learning felt connected to something I could actually build for myself.",
-    name: "Participant Story",
-    detail: "Learning journey",
-  },
-  {
-    number: "03",
-    category: "VENTURE",
-    quote:
-      "I had an idea, but I didn't know what to do next. Having someone to guide me changed how I looked at it.",
-    name: "Participant Story",
-    detail: "Entrepreneurship journey",
-  },
-];
+"use client";
+
+import { useLanguage } from "./LanguageProvider";
+import { storiesContent } from "@/lib/content/stories";
 
 export default function Stories() {
+  const { language } = useLanguage();
+  const c = storiesContent[language];
+
   return (
     <section
       id="stories"
@@ -40,16 +21,16 @@ export default function Stories() {
           <div>
 
             <p className="mb-6 text-xs font-medium uppercase tracking-[0.25em] text-black/40">
-              Stories
+              {c.label}
             </p>
 
             <h2 className="max-w-3xl text-4xl font-medium leading-[1.05] tracking-[-0.045em] md:text-5xl lg:text-6xl">
 
-              Every journey
+              {c.titleLine1}
               <br />
 
               <span className="font-serif italic font-normal">
-                starts somewhere.
+                {c.titleEmphasis}
               </span>
 
             </h2>
@@ -59,10 +40,7 @@ export default function Stories() {
 
           <p className="max-w-md text-sm leading-6 text-black/45 md:pb-2">
 
-            Nirmaan is about people, not numbers.
-            These stories will share the journeys, challenges,
-            discoveries and possibilities of the people who
-            choose to build their future with us.
+            {c.description}
 
           </p>
 
@@ -97,7 +75,7 @@ export default function Stories() {
               <div className="absolute bottom-8 left-8 md:bottom-12 md:left-12">
 
                 <p className="text-xs uppercase tracking-[0.2em] text-white/40">
-                  A Nirmaan story
+                  {c.featuredLabel}
                 </p>
 
               </div>
@@ -114,7 +92,7 @@ export default function Stories() {
                 <div className="flex items-center justify-between">
 
                   <span className="text-xs font-medium uppercase tracking-[0.2em] text-white/30">
-                    Coming soon
+                    {c.comingSoon}
                   </span>
 
                   <span className="text-xs text-white/20">
@@ -126,9 +104,7 @@ export default function Stories() {
 
                 <blockquote className="mt-16 max-w-2xl text-3xl font-medium leading-tight tracking-[-0.035em] md:text-4xl lg:text-5xl">
 
-                  "Every person's journey is different.
-                  What matters is having the opportunity
-                  to take the next step."
+                  "{c.featuredQuote}"
 
                 </blockquote>
 
@@ -138,11 +114,11 @@ export default function Stories() {
               <div className="mt-16 border-t border-white/10 pt-6">
 
                 <p className="text-sm font-medium">
-                  Your story could be next.
+                  {c.nextTitle}
                 </p>
 
                 <p className="mt-2 text-sm text-white/40">
-                  Real stories from Nirmaan participants will appear here.
+                  {c.nextText}
                 </p>
 
               </div>
@@ -158,10 +134,10 @@ export default function Stories() {
 
         <div className="mt-5 grid gap-5 md:grid-cols-3">
 
-          {stories.map((story) => (
+          {c.stories.map((story, index) => (
 
             <div
-              key={story.number}
+              key={index}
               className="group rounded-[2rem] border border-black/8 bg-white p-7 transition duration-500 hover:-translate-y-1 hover:shadow-xl hover:shadow-black/5 md:p-8"
             >
 
@@ -170,7 +146,7 @@ export default function Stories() {
               <div className="flex items-center justify-between">
 
                 <span className="text-xs font-medium tracking-[0.2em] text-black/25">
-                  {story.number}
+                  {String(index + 1).padStart(2, "0")}
                 </span>
 
                 <span className="rounded-full bg-[#F3F0EA] px-3 py-1.5 text-[10px] font-medium tracking-[0.12em] text-black/40">
@@ -214,11 +190,11 @@ export default function Stories() {
 
           <p className="mx-auto max-w-2xl text-2xl font-medium leading-tight tracking-[-0.025em] md:text-3xl">
 
-            One opportunity can change a direction.
+            {c.bottomLine1}
             <br />
 
             <span className="font-serif italic font-normal text-black/50">
-              One person can inspire another.
+              {c.bottomEmphasis}
             </span>
 
           </p>

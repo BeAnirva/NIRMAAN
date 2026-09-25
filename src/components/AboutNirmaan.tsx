@@ -1,4 +1,10 @@
+"use client";
+
+import { useLanguage } from "./LanguageProvider";
+
 export default function AboutNirmaan() {
+  const { t } = useLanguage();
+
   return (
     <section
       id="about"
@@ -12,7 +18,7 @@ export default function AboutNirmaan() {
 
           <div>
             <p className="text-xs font-medium uppercase tracking-[0.25em] text-black/40">
-              What is Nirmaan?
+              {t.about.label}
             </p>
           </div>
 
@@ -22,25 +28,21 @@ export default function AboutNirmaan() {
           <div>
 
             <h2 className="max-w-4xl text-4xl font-medium leading-[1.08] tracking-[-0.04em] md:text-5xl lg:text-6xl">
-              A place to discover your strengths,
-              build your skills and create a future
+              {t.about.title}
               <span className="font-serif italic font-normal">
-                {" "}you can be proud of.
+                {t.about.titleEmphasis}
               </span>
             </h2>
 
             <p className="mt-7 max-w-2xl text-base leading-7 text-black/50 md:text-lg md:leading-8">
-              Nirmaan gives you access to free learning, practical
-              guidance and people who believe in your potential —
-              whether you're looking for a career or want to build
-              something of your own.
+              {t.about.description}
             </p>
 
             <a
               href="/#journey"
               className="mt-7 inline-flex items-center gap-2 text-sm font-medium underline underline-offset-4 transition hover:text-black/60"
             >
-              See how Nirmaan works
+              {t.about.link}
               <span className="transition-transform duration-300 hover:translate-x-1">
                 →
               </span>

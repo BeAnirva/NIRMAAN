@@ -12,9 +12,12 @@ import {
   languages,
   translations,
   type Language,
+  type Translation,
 } from "@/lib/translations";
 
-type TranslationData = typeof translations.en;
+type TranslationData = Translation;
+
+const STORAGE_KEY = "nirmaan-language";
 
 interface LanguageContextType {
   language: Language;
@@ -34,9 +37,13 @@ export function LanguageProvider({
   const [language, setLanguageState] = useState<Language>("en");
 
   useEffect(() => {
-    const savedLanguage = localStorage.getItem(
-      "nirmaan-language"
-    ) as Language | null;
+    let savedLanguage: string | null = null;
+
+    try {
+      savedLanguage = localStorage.getItem(STORAGE_KEY);
+    } catch {
+      // localStorage can be blocked (private mode); fall back to English.
+    }
 
     if (
       savedLanguage &&
@@ -45,17 +52,25 @@ export function LanguageProvider({
         savedLanguage
       )
     ) {
-      setLanguageState(savedLanguage);
+      setLanguageState(savedLanguage as Language);
     }
   }, []);
+
+  // Keep <html lang> in sync so fonts, screen readers and the
+  // language-specific CSS in globals.css pick the right script.
+
+  useEffect(() => {
+    document.documentElement.lang = language;
+  }, [language]);
 
   const setLanguage = (newLanguage: Language) => {
     setLanguageState(newLanguage);
 
-    localStorage.setItem(
-      "nirmaan-language",
-      newLanguage
-    );
+    try {
+      localStorage.setItem(STORAGE_KEY, newLanguage);
+    } catch {
+      // Ignore: the choice just won't be remembered.
+    }
   };
 
   return (

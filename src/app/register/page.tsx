@@ -2,12 +2,30 @@
 
 import { useState } from "react";
 
+import FormHeader from "@/components/FormHeader";
+import { useLanguage } from "@/components/LanguageProvider";
+import { formsContent, indianStates } from "@/lib/content/forms";
+import {
+  currentStatusValues,
+  registerContent,
+  type RegisterErrorKey,
+} from "@/lib/content/register";
+
+// Errors are stored as keys (not sentences) so they switch language
+// along with the rest of the page.
+
+type Errors = Partial<Record<string, RegisterErrorKey>>;
+
 const GOOGLE_SCRIPT_URL =
   "https://script.google.com/macros/s/AKfycbzOs_jlzPywJLhk3YOAyjLO5s72jLTO-Es3v2xEvVfsH7NbG5i1_omfUQxw1-yXpy5S4A/exec";
 
 export default function RegisterPage() {
+  const { language } = useLanguage();
+  const c = registerContent[language];
+  const f = formsContent[language];
+
   const [step, setStep] = useState(1);
-  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [errors, setErrors] = useState<Errors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
@@ -35,7 +53,7 @@ export default function RegisterPage() {
 
     setErrors((previous) => ({
       ...previous,
-      [field]: "",
+      [field]: undefined,
     }));
   };
 
@@ -44,43 +62,42 @@ export default function RegisterPage() {
   // =========================
 
   const validateStep1 = () => {
-    const newErrors: Record<string, string> = {};
+    const newErrors: Errors = {};
 
     if (!formData.name.trim()) {
-      newErrors.name = "Please enter your full name.";
+      newErrors.name = "nameRequired";
     }
 
     if (!formData.age) {
-      newErrors.age = "Please enter your age.";
+      newErrors.age = "ageRequired";
     } else {
       const age = Number(formData.age);
 
       if (age < 13 || age > 100) {
-        newErrors.age = "Please enter a valid age.";
+        newErrors.age = "ageInvalid";
       }
     }
 
     if (!formData.mobile) {
-      newErrors.mobile = "Please enter your mobile number.";
+      newErrors.mobile = "mobileRequired";
     } else if (!/^\d{10}$/.test(formData.mobile)) {
-      newErrors.mobile =
-        "Mobile number must contain exactly 10 digits.";
+      newErrors.mobile = "mobileInvalid";
     }
 
     if (!formData.email.trim()) {
-      newErrors.email = "Please enter your email address.";
+      newErrors.email = "emailRequired";
     } else if (
       !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)
     ) {
-      newErrors.email = "Please enter a valid email address.";
+      newErrors.email = "emailInvalid";
     }
 
     if (!formData.city.trim()) {
-      newErrors.city = "Please enter your city.";
+      newErrors.city = "cityRequired";
     }
 
     if (!formData.state) {
-      newErrors.state = "Please select your state.";
+      newErrors.state = "stateRequired";
     }
 
     setErrors(newErrors);
@@ -93,16 +110,14 @@ export default function RegisterPage() {
   // =========================
 
   const validateStep2 = () => {
-    const newErrors: Record<string, string> = {};
+    const newErrors: Errors = {};
 
     if (!formData.currentStatus) {
-      newErrors.currentStatus =
-        "Please select where you are right now.";
+      newErrors.currentStatus = "statusRequired";
     }
 
     if (!formData.interests.trim()) {
-      newErrors.interests =
-        "Please tell us a little about your interests.";
+      newErrors.interests = "interestsRequired";
     }
 
     setErrors(newErrors);
@@ -115,11 +130,10 @@ export default function RegisterPage() {
   // =========================
 
   const validateStep3 = () => {
-    const newErrors: Record<string, string> = {};
+    const newErrors: Errors = {};
 
     if (!formData.goal.trim()) {
-      newErrors.goal =
-        "Please tell us what you would like to achieve.";
+      newErrors.goal = "goalRequired";
     }
 
     setErrors(newErrors);
@@ -217,9 +231,7 @@ export default function RegisterPage() {
   } catch (error) {
     console.error("Registration submission error:", error);
 
-    alert(
-      "Something went wrong while submitting your registration. Please try again."
-    );
+    alert(c.submitError);
   } finally {
     setIsSubmitting(false);
   }
@@ -233,27 +245,7 @@ export default function RegisterPage() {
     return (
       <main className="min-h-screen bg-[#F8F6F1]">
 
-        {/* NAVIGATION */}
-
-        <header className="border-b border-black/5 bg-[#F8F6F1]/90">
-
-          <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 md:px-10 lg:px-12">
-
-            <a href="/" className="group">
-
-              <div className="text-2xl font-bold tracking-[-0.04em]">
-                NIRMAAN
-              </div>
-
-              <div className="mt-0.5 text-[9px] font-medium tracking-[0.25em] text-black/45">
-                LEARN • BUILD • BECOME
-              </div>
-
-            </a>
-
-          </nav>
-
-        </header>
+        <FormHeader showBackLink={false} />
 
 
         {/* SUCCESS CONTENT */}
@@ -271,19 +263,18 @@ export default function RegisterPage() {
             </div>
 
             <p className="mt-8 text-xs font-medium uppercase tracking-[0.25em] text-black/40">
-              Registration complete
+              {c.successLabel}
             </p>
 
             <h1 className="mt-4 text-4xl font-medium tracking-[-0.04em] md:text-5xl">
 
-              You're on your way.
+              {c.successTitle}
 
             </h1>
 
             <p className="mx-auto mt-5 max-w-lg text-base leading-7 text-black/50">
 
-              Thank you for registering with Nirmaan. We've received your
-              information and will be in touch with you soon.
+              {c.successText}
 
             </p>
 
@@ -291,7 +282,7 @@ export default function RegisterPage() {
               href="/"
               className="mt-8 inline-flex rounded-full bg-[#1D1D1B] px-7 py-4 text-sm font-medium text-white transition duration-300 hover:-translate-y-0.5 hover:bg-black"
             >
-              Back to Nirmaan
+              {f.backButton}
             </a>
 
           </div>
@@ -305,36 +296,7 @@ export default function RegisterPage() {
   return (
     <main className="min-h-screen bg-[#F8F6F1]">
 
-      {/* =========================
-          NAVIGATION
-      ========================= */}
-
-      <header className="border-b border-black/5 bg-[#F8F6F1]/90">
-
-        <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 md:px-10 lg:px-12">
-
-          <a href="/" className="group">
-
-            <div className="text-2xl font-bold tracking-[-0.04em]">
-              NIRMAAN
-            </div>
-
-            <div className="mt-0.5 text-[9px] font-medium tracking-[0.25em] text-black/45">
-              LEARN • BUILD • BECOME
-            </div>
-
-          </a>
-
-          <a
-            href="/"
-            className="text-sm text-black/50 transition hover:text-black"
-          >
-            ← Back to Nirmaan
-          </a>
-
-        </nav>
-
-      </header>
+      <FormHeader />
 
 
       {/* =========================
@@ -348,25 +310,24 @@ export default function RegisterPage() {
         <div className="mb-12">
 
           <p className="text-xs font-medium uppercase tracking-[0.25em] text-black/40">
-            Start your journey
+            {c.startLabel}
           </p>
 
           <h1 className="mt-5 text-4xl font-medium leading-tight tracking-[-0.04em] md:text-5xl">
 
-            Let's get to know
+            {c.titleLine1}
 
             <br />
 
             <span className="font-serif italic font-normal">
-              you.
+              {c.titleEmphasis}
             </span>
 
           </h1>
 
           <p className="mt-5 max-w-xl text-base leading-7 text-black/50">
 
-            There are no right or wrong answers. Tell us a little about
-            yourself so we can understand how Nirmaan can support you.
+            {c.intro}
 
           </p>
 
@@ -398,9 +359,9 @@ export default function RegisterPage() {
 
           <div className="mt-3 flex justify-between text-xs text-black/35">
 
-            <span>About You</span>
-            <span>Your Direction</span>
-            <span>Your Goals</span>
+            {c.progress.map((label) => (
+              <span key={label}>{label}</span>
+            ))}
 
           </div>
 
@@ -422,11 +383,11 @@ export default function RegisterPage() {
             <div>
 
               <p className="text-xs font-medium uppercase tracking-[0.2em] text-black/35">
-                Step 01
+                {c.step} 01
               </p>
 
               <h2 className="mt-3 text-2xl font-medium tracking-[-0.03em]">
-                Tell us about yourself
+                {c.step1Title}
               </h2>
 
 
@@ -437,7 +398,7 @@ export default function RegisterPage() {
                 <div>
 
                   <label className="mb-2 block text-sm font-medium">
-                    Full Name
+                    {f.fullName}
                   </label>
 
                   <input
@@ -446,7 +407,7 @@ export default function RegisterPage() {
                     onChange={(e) =>
                       updateField("name", e.target.value)
                     }
-                    placeholder="Your full name"
+                    placeholder={f.fullNamePlaceholder}
                     className={`w-full rounded-xl border bg-[#F8F6F1] px-4 py-4 text-sm outline-none transition ${
                       errors.name
                         ? "border-red-400"
@@ -456,7 +417,7 @@ export default function RegisterPage() {
 
                   {errors.name && (
                     <p className="mt-2 text-xs text-red-500">
-                      {errors.name}
+                      {c.errors[errors.name]}
                     </p>
                   )}
 
@@ -468,7 +429,7 @@ export default function RegisterPage() {
                 <div>
 
                   <label className="mb-2 block text-sm font-medium">
-                    Age
+                    {c.age}
                   </label>
 
                   <input
@@ -484,7 +445,7 @@ export default function RegisterPage() {
                       updateField("age", value);
 
                     }}
-                    placeholder="Your age"
+                    placeholder={c.agePlaceholder}
                     className={`w-full rounded-xl border bg-[#F8F6F1] px-4 py-4 text-sm outline-none transition ${
                       errors.age
                         ? "border-red-400"
@@ -494,7 +455,7 @@ export default function RegisterPage() {
 
                   {errors.age && (
                     <p className="mt-2 text-xs text-red-500">
-                      {errors.age}
+                      {c.errors[errors.age]}
                     </p>
                   )}
 
@@ -506,7 +467,7 @@ export default function RegisterPage() {
                 <div>
 
                   <label className="mb-2 block text-sm font-medium">
-                    Mobile Number
+                    {f.mobile}
                   </label>
 
                   <input
@@ -523,7 +484,7 @@ export default function RegisterPage() {
                       updateField("mobile", value);
 
                     }}
-                    placeholder="10-digit mobile number"
+                    placeholder={c.mobilePlaceholder}
                     className={`w-full rounded-xl border bg-[#F8F6F1] px-4 py-4 text-sm outline-none transition ${
                       errors.mobile
                         ? "border-red-400"
@@ -533,7 +494,7 @@ export default function RegisterPage() {
 
                   {errors.mobile && (
                     <p className="mt-2 text-xs text-red-500">
-                      {errors.mobile}
+                      {c.errors[errors.mobile]}
                     </p>
                   )}
 
@@ -545,7 +506,7 @@ export default function RegisterPage() {
                 <div>
 
                   <label className="mb-2 block text-sm font-medium">
-                    Email Address
+                    {c.email}
                   </label>
 
                   <input
@@ -564,7 +525,7 @@ export default function RegisterPage() {
 
                   {errors.email && (
                     <p className="mt-2 text-xs text-red-500">
-                      {errors.email}
+                      {c.errors[errors.email]}
                     </p>
                   )}
 
@@ -576,7 +537,7 @@ export default function RegisterPage() {
                 <div>
 
                   <label className="mb-2 block text-sm font-medium">
-                    City
+                    {f.city}
                   </label>
 
                   <input
@@ -585,7 +546,7 @@ export default function RegisterPage() {
                     onChange={(e) =>
                       updateField("city", e.target.value)
                     }
-                    placeholder="Where are you based?"
+                    placeholder={c.cityPlaceholder}
                     className={`w-full rounded-xl border bg-[#F8F6F1] px-4 py-4 text-sm outline-none transition ${
                       errors.city
                         ? "border-red-400"
@@ -595,7 +556,7 @@ export default function RegisterPage() {
 
                   {errors.city && (
                     <p className="mt-2 text-xs text-red-500">
-                      {errors.city}
+                      {c.errors[errors.city]}
                     </p>
                   )}
 
@@ -607,7 +568,7 @@ export default function RegisterPage() {
                 <div>
 
                   <label className="mb-2 block text-sm font-medium">
-                    State
+                    {f.state}
                   </label>
 
                   <select
@@ -623,158 +584,20 @@ export default function RegisterPage() {
                   >
 
                     <option value="" disabled>
-                      Select your state
+                      {f.selectState}
                     </option>
 
-                    <option value="Andhra Pradesh">
-                      Andhra Pradesh
-                    </option>
-
-                    <option value="Arunachal Pradesh">
-                      Arunachal Pradesh
-                    </option>
-
-                    <option value="Assam">
-                      Assam
-                    </option>
-
-                    <option value="Bihar">
-                      Bihar
-                    </option>
-
-                    <option value="Chhattisgarh">
-                      Chhattisgarh
-                    </option>
-
-                    <option value="Goa">
-                      Goa
-                    </option>
-
-                    <option value="Gujarat">
-                      Gujarat
-                    </option>
-
-                    <option value="Haryana">
-                      Haryana
-                    </option>
-
-                    <option value="Himachal Pradesh">
-                      Himachal Pradesh
-                    </option>
-
-                    <option value="Jharkhand">
-                      Jharkhand
-                    </option>
-
-                    <option value="Karnataka">
-                      Karnataka
-                    </option>
-
-                    <option value="Kerala">
-                      Kerala
-                    </option>
-
-                    <option value="Madhya Pradesh">
-                      Madhya Pradesh
-                    </option>
-
-                    <option value="Maharashtra">
-                      Maharashtra
-                    </option>
-
-                    <option value="Manipur">
-                      Manipur
-                    </option>
-
-                    <option value="Meghalaya">
-                      Meghalaya
-                    </option>
-
-                    <option value="Mizoram">
-                      Mizoram
-                    </option>
-
-                    <option value="Nagaland">
-                      Nagaland
-                    </option>
-
-                    <option value="Odisha">
-                      Odisha
-                    </option>
-
-                    <option value="Punjab">
-                      Punjab
-                    </option>
-
-                    <option value="Rajasthan">
-                      Rajasthan
-                    </option>
-
-                    <option value="Sikkim">
-                      Sikkim
-                    </option>
-
-                    <option value="Tamil Nadu">
-                      Tamil Nadu
-                    </option>
-
-                    <option value="Telangana">
-                      Telangana
-                    </option>
-
-                    <option value="Tripura">
-                      Tripura
-                    </option>
-
-                    <option value="Uttar Pradesh">
-                      Uttar Pradesh
-                    </option>
-
-                    <option value="Uttarakhand">
-                      Uttarakhand
-                    </option>
-
-                    <option value="West Bengal">
-                      West Bengal
-                    </option>
-
-                    <option value="Andaman and Nicobar Islands">
-                      Andaman and Nicobar Islands
-                    </option>
-
-                    <option value="Chandigarh">
-                      Chandigarh
-                    </option>
-
-                    <option value="Dadra and Nagar Haveli and Daman and Diu">
-                      Dadra and Nagar Haveli and Daman and Diu
-                    </option>
-
-                    <option value="Delhi">
-                      Delhi
-                    </option>
-
-                    <option value="Jammu and Kashmir">
-                      Jammu and Kashmir
-                    </option>
-
-                    <option value="Ladakh">
-                      Ladakh
-                    </option>
-
-                    <option value="Lakshadweep">
-                      Lakshadweep
-                    </option>
-
-                    <option value="Puducherry">
-                      Puducherry
-                    </option>
+                    {indianStates.map((state) => (
+                      <option key={state.value} value={state.value}>
+                        {state.label[language]}
+                      </option>
+                    ))}
 
                   </select>
 
                   {errors.state && (
                     <p className="mt-2 text-xs text-red-500">
-                      {errors.state}
+                      {c.errors[errors.state]}
                     </p>
                   )}
 
@@ -796,27 +619,21 @@ export default function RegisterPage() {
             <div>
 
               <p className="text-xs font-medium uppercase tracking-[0.2em] text-black/35">
-                Step 02
+                {c.step} 02
               </p>
 
               <h2 className="mt-3 text-2xl font-medium tracking-[-0.03em]">
-                Where are you right now?
+                {c.step2Title}
               </h2>
 
               <p className="mt-3 text-sm leading-6 text-black/50">
-                Choose the option that feels closest to where you are today.
+                {c.step2Text}
               </p>
 
 
               <div className="mt-8 grid gap-3">
 
-                {[
-                  "I'm studying",
-                  "I'm looking for work",
-                  "I'm currently working",
-                  "I want to start something of my own",
-                  "I'm not sure yet",
-                ].map((option) => (
+                {currentStatusValues.map((option, index) => (
 
                   <button
                     key={option}
@@ -830,7 +647,7 @@ export default function RegisterPage() {
                         : "border-black/10 bg-[#F8F6F1] hover:border-black/25"
                     }`}
                   >
-                    {option}
+                    {c.statusLabels[index]}
                   </button>
 
                 ))}
@@ -839,7 +656,7 @@ export default function RegisterPage() {
 
               {errors.currentStatus && (
                 <p className="mt-2 text-xs text-red-500">
-                  {errors.currentStatus}
+                  {c.errors[errors.currentStatus]}
                 </p>
               )}
 
@@ -849,7 +666,7 @@ export default function RegisterPage() {
               <div className="mt-10">
 
                 <label className="mb-2 block text-sm font-medium">
-                  What are you most interested in?
+                  {c.interests}
                 </label>
 
                 <textarea
@@ -857,7 +674,7 @@ export default function RegisterPage() {
                   onChange={(e) =>
                     updateField("interests", e.target.value)
                   }
-                  placeholder="Tell us about your interests, skills or things you'd like to learn..."
+                  placeholder={c.interestsPlaceholder}
                   rows={5}
                   className={`w-full resize-none rounded-xl border bg-[#F8F6F1] px-4 py-4 text-sm outline-none transition ${
                     errors.interests
@@ -868,7 +685,7 @@ export default function RegisterPage() {
 
                 {errors.interests && (
                   <p className="mt-2 text-xs text-red-500">
-                    {errors.interests}
+                    {c.errors[errors.interests]}
                   </p>
                 )}
 
@@ -888,23 +705,22 @@ export default function RegisterPage() {
             <div>
 
               <p className="text-xs font-medium uppercase tracking-[0.2em] text-black/35">
-                Step 03
+                {c.step} 03
               </p>
 
               <h2 className="mt-3 text-2xl font-medium tracking-[-0.03em]">
-                Where would you like to go?
+                {c.step3Title}
               </h2>
 
               <p className="mt-3 text-sm leading-6 text-black/50">
-                You don't need to have a perfect plan. Just tell us what
-                you're hoping to work towards.
+                {c.step3Text}
               </p>
 
 
               <div className="mt-8">
 
                 <label className="mb-2 block text-sm font-medium">
-                  What would you like to achieve?
+                  {c.goal}
                 </label>
 
                 <textarea
@@ -912,7 +728,7 @@ export default function RegisterPage() {
                   onChange={(e) =>
                     updateField("goal", e.target.value)
                   }
-                  placeholder="For example: get a job, learn a new skill, start a business, become financially independent..."
+                  placeholder={c.goalPlaceholder}
                   rows={7}
                   className={`w-full resize-none rounded-xl border bg-[#F8F6F1] px-4 py-4 text-sm outline-none transition ${
                     errors.goal
@@ -923,7 +739,7 @@ export default function RegisterPage() {
 
                 {errors.goal && (
                   <p className="mt-2 text-xs text-red-500">
-                    {errors.goal}
+                    {c.errors[errors.goal]}
                   </p>
                 )}
 
@@ -935,11 +751,10 @@ export default function RegisterPage() {
                 <p className="text-sm leading-6 text-black/60">
 
                   <span className="font-medium text-black">
-                    Remember:
+                    {c.rememberLabel}
                   </span>{" "}
 
-                  You don't need to know exactly where you're going.
-                  Nirmaan is here to help you figure out the next step.
+                  {c.rememberText}
 
                 </p>
 
@@ -963,7 +778,7 @@ export default function RegisterPage() {
                 onClick={previousStep}
                 className="text-sm font-medium text-black/50 transition hover:text-black"
               >
-                ← Back
+                {c.back}
               </button>
 
             ) : (
@@ -980,7 +795,7 @@ export default function RegisterPage() {
                 onClick={nextStep}
                 className="rounded-full bg-[#1D1D1B] px-7 py-4 text-sm font-medium text-white transition duration-300 hover:-translate-y-0.5 hover:bg-black"
               >
-                Continue →
+                {c.continue}
               </button>
 
             ) : (
@@ -996,9 +811,7 @@ export default function RegisterPage() {
                 }`}
               >
 
-                {isSubmitting
-                  ? "Submitting..."
-                  : "Complete Registration →"}
+                {isSubmitting ? f.submitting : c.complete}
 
               </button>
 
@@ -1013,8 +826,7 @@ export default function RegisterPage() {
 
         <p className="mt-8 text-center text-xs leading-5 text-black/30">
 
-          Your information will only be used to understand how Nirmaan
-          can support your journey.
+          {c.footnote}
 
         </p>
 

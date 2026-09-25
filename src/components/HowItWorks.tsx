@@ -1,27 +1,25 @@
+"use client";
+
+import { useLanguage } from "./LanguageProvider";
+
 const steps = [
   {
     number: "01",
-    title: "Discover",
-    description: "Understand your strengths and possibilities.",
   },
   {
     number: "02",
-    title: "Learn",
-    description: "Build practical skills through free learning.",
   },
   {
     number: "03",
-    title: "Grow",
-    description: "Practice with guidance, projects and mentorship.",
   },
   {
     number: "04",
-    title: "Build",
-    description: "Take your next step with confidence.",
   },
 ];
 
 export default function HowItWorks() {
+  const { t } = useLanguage();
+
   return (
     <section
       id="journey"
@@ -34,16 +32,15 @@ export default function HowItWorks() {
         <div className="max-w-2xl">
 
           <p className="mb-5 text-xs font-medium uppercase tracking-[0.25em] text-black/40">
-            How it works
+            {t.howItWorks.label}
           </p>
 
           <h2 className="text-4xl font-medium leading-tight tracking-[-0.04em] md:text-5xl">
-            One step at a time.
+            {t.howItWorks.title}
           </h2>
 
           <p className="mt-5 max-w-xl text-base leading-7 text-black/50">
-            You don't need to have everything figured out.
-            Nirmaan helps you take the next step.
+            {t.howItWorks.description}
           </p>
 
         </div>
@@ -67,11 +64,11 @@ export default function HowItWorks() {
               </span>
 
               <h3 className="mt-8 text-2xl font-medium tracking-[-0.03em]">
-                {step.title}
+                {t.howItWorks.steps[index].title}
               </h3>
 
               <p className="mt-3 text-sm leading-6 text-black/50">
-                {step.description}
+                {t.howItWorks.steps[index].description}
               </p>
 
             </div>

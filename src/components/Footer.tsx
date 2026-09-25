@@ -1,19 +1,25 @@
+"use client";
+
+import { useLanguage } from "./LanguageProvider";
+
 const footerLinks = {
   explore: [
-    { label: "About Nirmaan", href: "#about" },
-    { label: "Programs", href: "#programs" },
-    { label: "Your Journey", href: "#journey" },
-    { label: "Learning", href: "#learning" },
+    { key: "about", href: "#about" },
+    { key: "programs", href: "#programs" },
+    { key: "journey", href: "#journey" },
+    { key: "learning", href: "#learning" },
   ],
 
   opportunities: [
-    { label: "Career Support", href: "/career" },
-    { label: "Nirmaan Ventures", href: "/ventures" },
+    { key: "career", href: "/career" },
+    { key: "ventures", href: "/ventures" },
   ],
-};
+} as const;
 
 
 export default function Footer() {
+  const { t } = useLanguage();
+
   return (
     <footer className="bg-[#1D1D1B] px-6 pb-8 pt-16 text-white md:px-10 md:pt-20 lg:px-12">
 
@@ -35,11 +41,11 @@ export default function Footer() {
             </a>
 
             <p className="mt-4 max-w-sm text-sm leading-6 text-white/40">
-              A space to learn, grow, build and create your own path.
+              {t.footer.tagline}
             </p>
 
             <p className="mt-8 text-xs uppercase tracking-[0.2em] text-white/25">
-              Learn • Build • Become
+              {t.footer.motto}
             </p>
 
           </div>
@@ -50,7 +56,7 @@ export default function Footer() {
           <div>
 
             <p className="text-xs font-medium uppercase tracking-[0.2em] text-white/30">
-              Explore
+              {t.footer.exploreHeading}
             </p>
 
             <div className="mt-5 space-y-3">
@@ -58,11 +64,11 @@ export default function Footer() {
               {footerLinks.explore.map((link) => (
 
                 <a
-                  key={link.label}
+                  key={link.key}
                   href={link.href}
                   className="block w-fit text-sm text-white/50 transition hover:text-white"
                 >
-                  {link.label}
+                  {t.footer.explore[link.key]}
                 </a>
 
               ))}
@@ -77,7 +83,7 @@ export default function Footer() {
           <div>
 
             <p className="text-xs font-medium uppercase tracking-[0.2em] text-white/30">
-              Opportunities
+              {t.footer.opportunitiesHeading}
             </p>
 
             <div className="mt-5 space-y-3">
@@ -85,11 +91,11 @@ export default function Footer() {
               {footerLinks.opportunities.map((link) => (
 
                 <a
-                  key={link.label}
+                  key={link.key}
                   href={link.href}
                   className="block w-fit text-sm text-white/50 transition hover:text-white"
                 >
-                  {link.label}
+                  {t.footer.opportunities[link.key]}
                 </a>
 
               ))}
@@ -102,14 +108,14 @@ export default function Footer() {
             <div className="mt-8 border-t border-white/10 pt-6">
 
               <p className="text-sm text-white/40">
-                Want to contribute?
+                {t.footer.contribute}
               </p>
 
               <a
                 href="/mentorship"
                 className="mt-2 inline-flex items-center text-sm font-medium text-white transition hover:text-white/70"
               >
-                Become a Mentor
+                {t.footer.becomeMentor}
 
                 <span className="ml-2 transition-transform duration-300 hover:translate-x-1">
                   →
@@ -127,18 +133,18 @@ export default function Footer() {
           <div>
 
             <p className="text-xs font-medium uppercase tracking-[0.2em] text-white/30">
-              Ready?
+              {t.footer.readyHeading}
             </p>
 
             <p className="mt-5 max-w-xs text-sm leading-6 text-white/45">
-              Your next chapter can start with one small step.
+              {t.footer.readyText}
             </p>
 
             <a
               href="/register"
               className="mt-6 inline-flex items-center rounded-full bg-white px-6 py-3 text-sm font-medium text-[#1D1D1B] transition hover:-translate-y-1 hover:bg-[#F8F6F1]"
             >
-              Start Your Journey →
+              {t.footer.startJourney}
             </a>
 
           </div>
@@ -152,13 +158,13 @@ export default function Footer() {
 
           <h2 className="max-w-5xl text-4xl font-medium leading-[0.95] tracking-[-0.05em] text-white/90 md:text-6xl lg:text-7xl">
 
-            Your story isn't defined
+            {t.footer.statementLine1}
             <br />
 
-            by where you{" "}
+            {t.footer.statementLine2}
 
             <span className="font-serif italic font-normal text-white/40">
-              started.
+              {t.footer.statementEmphasis}
             </span>
 
           </h2>
@@ -171,7 +177,7 @@ export default function Footer() {
         <div className="flex flex-col gap-5 pt-7 text-xs text-white/30 md:flex-row md:items-center md:justify-between">
 
           <p>
-            © {new Date().getFullYear()} NIRMAAN. All rights reserved.
+            © {new Date().getFullYear()} NIRMAAN. {t.footer.rights}
           </p>
 
 
@@ -181,21 +187,21 @@ export default function Footer() {
               href="#"
               className="transition hover:text-white"
             >
-              Privacy
+              {t.footer.privacy}
             </a>
 
             <a
               href="#"
               className="transition hover:text-white"
             >
-              Terms
+              {t.footer.terms}
             </a>
 
             <a
               href="#"
               className="transition hover:text-white"
             >
-              Contact
+              {t.footer.contact}
             </a>
 
           </div>

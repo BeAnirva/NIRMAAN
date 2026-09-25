@@ -2,10 +2,24 @@
 
 import { useState } from "react";
 
+import FormHeader from "@/components/FormHeader";
+import { useLanguage } from "@/components/LanguageProvider";
+import { formsContent, indianStates } from "@/lib/content/forms";
+import {
+  becomeMentorContent,
+  contributionValues,
+  experienceValues,
+  mentorStatusValues,
+} from "@/lib/content/becomeMentor";
+
 const GOOGLE_SCRIPT_URL =
   "https://script.google.com/macros/s/AKfycbw2fjqMBTAndVVznzPG7Uce2ackDG3J8Nz9YsAhdWv4IodfBIELAhGuy7tLo4wTWNlnQw/exec";
 
 export default function BecomeAMentor() {
+  const { language, t } = useLanguage();
+  const c = becomeMentorContent[language];
+  const f = formsContent[language];
+
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -129,9 +143,7 @@ export default function BecomeAMentor() {
         error
       );
 
-      alert(
-        "Something went wrong while submitting your application. Please try again."
-      );
+      alert(c.submitError);
     } finally {
       setIsSubmitting(false);
     }
@@ -141,30 +153,7 @@ export default function BecomeAMentor() {
     return (
       <main className="min-h-screen bg-[#F8F6F1]">
 
-        {/* NAVIGATION */}
-
-        <nav className="border-b border-black/5 bg-[#F8F6F1]">
-          <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 md:px-10 lg:px-12">
-
-            <a href="/" className="group">
-              <div className="text-2xl font-bold tracking-[-0.04em]">
-                NIRMAAN
-              </div>
-
-              <div className="mt-0.5 text-[9px] font-medium tracking-[0.25em] text-black/45">
-                LEARN • BUILD • BECOME
-              </div>
-            </a>
-
-            <a
-              href="/"
-              className="text-sm text-black/60 transition hover:text-black"
-            >
-              ← Back to Nirmaan
-            </a>
-
-          </div>
-        </nav>
+        <FormHeader showBackLink={false} />
 
 
         {/* SUCCESS */}
@@ -182,23 +171,22 @@ export default function BecomeAMentor() {
             </div>
 
             <p className="mt-8 text-xs font-medium uppercase tracking-[0.25em] text-black/40">
-              Application received
+              {c.successLabel}
             </p>
 
             <h1 className="mt-4 text-4xl font-medium tracking-[-0.04em] md:text-5xl">
-              Thank you for stepping forward.
+              {c.successTitle}
             </h1>
 
             <p className="mx-auto mt-5 max-w-lg text-base leading-7 text-black/50">
-              We've received your mentor application. Our team will
-              review your information and get back to you soon.
+              {c.successText}
             </p>
 
             <a
               href="/"
               className="mt-8 inline-flex rounded-full bg-[#1D1D1B] px-7 py-4 text-sm font-medium text-white transition duration-300 hover:-translate-y-0.5 hover:bg-black"
             >
-              Back to Nirmaan
+              {f.backButton}
             </a>
 
           </div>
@@ -212,36 +200,7 @@ export default function BecomeAMentor() {
   return (
     <main className="min-h-screen bg-[#F8F6F1]">
 
-      {/* =========================
-          NAVIGATION
-      ========================= */}
-
-      <nav className="border-b border-black/5 bg-[#F8F6F1]">
-
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 md:px-10 lg:px-12">
-
-          <a href="/" className="group">
-
-            <div className="text-2xl font-bold tracking-[-0.04em]">
-              NIRMAAN
-            </div>
-
-            <div className="mt-0.5 text-[9px] font-medium tracking-[0.25em] text-black/45">
-              LEARN • BUILD • BECOME
-            </div>
-
-          </a>
-
-          <a
-            href="/"
-            className="text-sm text-black/60 transition hover:text-black"
-          >
-            ← Back to Nirmaan
-          </a>
-
-        </div>
-
-      </nav>
+      <FormHeader />
 
 
       {/* =========================
@@ -259,17 +218,17 @@ export default function BecomeAMentor() {
             <div>
 
               <p className="mb-6 text-xs font-medium uppercase tracking-[0.25em] text-black/40">
-                Become a Mentor
+                {c.label}
               </p>
 
               <h1 className="max-w-2xl text-4xl font-semibold leading-[1.02] tracking-[-0.045em] sm:text-5xl md:text-6xl lg:text-[4.5rem]">
 
-                Heroes don't always
+                {c.titleLine1}
 
                 <br />
 
                 <span className="font-serif italic font-normal">
-                  wear capes.
+                  {c.titleEmphasis}
                 </span>
 
               </h1>
@@ -282,10 +241,7 @@ export default function BecomeAMentor() {
             <div>
 
               <p className="max-w-xl text-base leading-7 text-black/60 md:text-lg md:leading-8">
-                You've learned things that someone else is just beginning
-                to figure out. Nirmaan gives you a space to share your
-                experience, guide young people and contribute to someone's
-                next step.
+                {c.intro}
               </p>
 
             </div>
@@ -313,7 +269,7 @@ export default function BecomeAMentor() {
                 <div>
 
                   <p className="text-xs font-medium uppercase tracking-[0.2em] text-black/40">
-                    The Nirmaan Community
+                    {c.communityLabel}
                   </p>
 
                 </div>
@@ -322,24 +278,19 @@ export default function BecomeAMentor() {
 
                   <p className="max-w-lg text-3xl font-medium leading-tight tracking-[-0.03em] md:text-4xl">
 
-                    You don't need to
-                    have all the answers.
+                    {c.messagePart1}
 
                     <br />
                     <br />
 
-                    Sometimes, sharing
-                    what you've already
-                    learned is enough to
-                    help someone move
-                    forward.
+                    {c.messagePart2}
 
                   </p>
 
                   <div className="mt-8">
 
                     <span className="inline-flex rounded-full bg-black/10 px-4 py-2 text-xs font-medium text-black/55">
-                      Share • Guide • Inspire
+                      {c.tagline}
                     </span>
 
                   </div>
@@ -360,16 +311,15 @@ export default function BecomeAMentor() {
               <div>
 
                 <p className="text-xs font-medium uppercase tracking-[0.2em] text-black/35">
-                  Mentor Application
+                  {c.formLabel}
                 </p>
 
                 <h2 className="mt-4 text-3xl font-medium tracking-[-0.035em] md:text-4xl">
-                  Tell us a little about yourself.
+                  {c.formTitle}
                 </h2>
 
                 <p className="mt-3 max-w-xl text-sm leading-6 text-black/50">
-                  This helps us understand who you are and how you would
-                  like to contribute to the Nirmaan community.
+                  {c.formText}
                 </p>
 
               </div>
@@ -386,14 +336,14 @@ export default function BecomeAMentor() {
                 <div>
 
                   <label className="mb-2 block text-sm font-medium text-black/70">
-                    Full Name <span className="text-black/40">*</span>
+                    {f.fullName} <span className="text-black/40">*</span>
                   </label>
 
                   <input
                     name="fullName"
                     type="text"
                     required
-                    placeholder="Your full name"
+                    placeholder={f.fullNamePlaceholder}
                     className="w-full rounded-xl border border-black/10 bg-[#F8F6F1] px-4 py-3.5 text-sm outline-none transition placeholder:text-black/30 focus:border-black/30"
                   />
 
@@ -407,7 +357,7 @@ export default function BecomeAMentor() {
                   <div>
 
                     <label className="mb-2 block text-sm font-medium text-black/70">
-                      Email <span className="text-black/40">*</span>
+                      {c.email} <span className="text-black/40">*</span>
                     </label>
 
                     <input
@@ -424,7 +374,7 @@ export default function BecomeAMentor() {
                   <div>
 
                     <label className="mb-2 block text-sm font-medium text-black/70">
-                      Mobile Number <span className="text-black/40">*</span>
+                      {f.mobile} <span className="text-black/40">*</span>
                     </label>
 
                     <input
@@ -448,14 +398,14 @@ export default function BecomeAMentor() {
                   <div>
 
                     <label className="mb-2 block text-sm font-medium text-black/70">
-                      City <span className="text-black/40">*</span>
+                      {f.city} <span className="text-black/40">*</span>
                     </label>
 
                     <input
                       name="city"
                       type="text"
                       required
-                      placeholder="e.g. Bhubaneswar"
+                      placeholder={c.cityPlaceholder}
                       className="w-full rounded-xl border border-black/10 bg-[#F8F6F1] px-4 py-3.5 text-sm outline-none transition placeholder:text-black/30 focus:border-black/30"
                     />
 
@@ -465,7 +415,7 @@ export default function BecomeAMentor() {
                   <div>
 
                     <label className="mb-2 block text-sm font-medium text-black/70">
-                      State <span className="text-black/40">*</span>
+                      {f.state} <span className="text-black/40">*</span>
                     </label>
 
                     <select
@@ -476,47 +426,14 @@ export default function BecomeAMentor() {
                     >
 
                       <option value="" disabled>
-                        Select your state
+                        {f.selectState}
                       </option>
 
-                      <option>Andhra Pradesh</option>
-                      <option>Arunachal Pradesh</option>
-                      <option>Assam</option>
-                      <option>Bihar</option>
-                      <option>Chhattisgarh</option>
-                      <option>Goa</option>
-                      <option>Gujarat</option>
-                      <option>Haryana</option>
-                      <option>Himachal Pradesh</option>
-                      <option>Jharkhand</option>
-                      <option>Karnataka</option>
-                      <option>Kerala</option>
-                      <option>Madhya Pradesh</option>
-                      <option>Maharashtra</option>
-                      <option>Manipur</option>
-                      <option>Meghalaya</option>
-                      <option>Mizoram</option>
-                      <option>Nagaland</option>
-                      <option>Odisha</option>
-                      <option>Punjab</option>
-                      <option>Rajasthan</option>
-                      <option>Sikkim</option>
-                      <option>Tamil Nadu</option>
-                      <option>Telangana</option>
-                      <option>Tripura</option>
-                      <option>Uttar Pradesh</option>
-                      <option>Uttarakhand</option>
-                      <option>West Bengal</option>
-                      <option>Andaman and Nicobar Islands</option>
-                      <option>Chandigarh</option>
-                      <option>
-                        Dadra and Nagar Haveli and Daman and Diu
-                      </option>
-                      <option>Delhi</option>
-                      <option>Jammu and Kashmir</option>
-                      <option>Ladakh</option>
-                      <option>Lakshadweep</option>
-                      <option>Puducherry</option>
+                      {indianStates.map((state) => (
+                        <option key={state.value} value={state.value}>
+                          {state.label[language]}
+                        </option>
+                      ))}
 
                     </select>
 
@@ -530,7 +447,7 @@ export default function BecomeAMentor() {
                 <div>
 
                   <label className="mb-2 block text-sm font-medium text-black/70">
-                    You are a <span className="text-black/40">*</span>
+                    {c.statusLabel} <span className="text-black/40">*</span>
                   </label>
 
                   <select
@@ -541,20 +458,14 @@ export default function BecomeAMentor() {
                   >
 
                     <option value="" disabled>
-                      Select your current status
+                      {c.statusPlaceholder}
                     </option>
 
-                    <option value="student">
-                      Student
-                    </option>
-
-                    <option value="working-professional">
-                      Working Professional
-                    </option>
-
-                    <option value="own-venture">
-                      Own Venture / Entrepreneur
-                    </option>
+                    {mentorStatusValues.map((value, index) => (
+                      <option key={value} value={value}>
+                        {c.statusLabels[index]}
+                      </option>
+                    ))}
 
                   </select>
 
@@ -566,19 +477,19 @@ export default function BecomeAMentor() {
                 <div>
 
                   <label className="mb-2 block text-sm font-medium text-black/70">
-                    Your Field <span className="text-black/40">*</span>
+                    {c.field} <span className="text-black/40">*</span>
                   </label>
 
                   <input
                     name="field"
                     type="text"
                     required
-                    placeholder="e.g. Agriculture, Technology, HR, Design, Finance..."
+                    placeholder={c.fieldPlaceholder}
                     className="w-full rounded-xl border border-black/10 bg-[#F8F6F1] px-4 py-3.5 text-sm outline-none transition placeholder:text-black/30 focus:border-black/30"
                   />
 
                   <p className="mt-2 text-xs leading-5 text-black/35">
-                    Tell us the field, industry, subject or area you know best.
+                    {c.fieldHelp}
                   </p>
 
                 </div>
@@ -589,7 +500,7 @@ export default function BecomeAMentor() {
                 <div>
 
                   <label className="mb-2 block text-sm font-medium text-black/70">
-                    Current Role / Profession{" "}
+                    {c.role}{" "}
                     <span className="text-black/40">*</span>
                   </label>
 
@@ -597,7 +508,7 @@ export default function BecomeAMentor() {
                     name="role"
                     type="text"
                     required
-                    placeholder="e.g. HR Manager, Student, Founder, Designer..."
+                    placeholder={c.rolePlaceholder}
                     className="w-full rounded-xl border border-black/10 bg-[#F8F6F1] px-4 py-3.5 text-sm outline-none transition placeholder:text-black/30 focus:border-black/30"
                   />
 
@@ -609,10 +520,10 @@ export default function BecomeAMentor() {
                 <div>
 
                   <label className="mb-2 block text-sm font-medium text-black/70">
-                    Organization
+                    {c.organization}
 
                     <span className="ml-2 text-xs font-normal text-black/30">
-                      Optional
+                      {f.optional}
                     </span>
 
                   </label>
@@ -620,7 +531,7 @@ export default function BecomeAMentor() {
                   <input
                     name="organization"
                     type="text"
-                    placeholder="Company / Organization / College"
+                    placeholder={c.organizationPlaceholder}
                     className="w-full rounded-xl border border-black/10 bg-[#F8F6F1] px-4 py-3.5 text-sm outline-none transition placeholder:text-black/30 focus:border-black/30"
                   />
 
@@ -632,25 +543,17 @@ export default function BecomeAMentor() {
                 <div>
 
                   <label className="mb-3 block text-sm font-medium text-black/70">
-                    HOW YOU'D LIKE TO CONTRIBUTE{" "}
+                    {c.contribute}{" "}
                     <span className="text-black/40">*</span>
                   </label>
 
                   <p className="mb-4 text-xs text-black/40">
-                    Select all that apply.
+                    {c.contributeHelp}
                   </p>
 
                   <div className="grid gap-3 sm:grid-cols-2">
 
-                    {[
-                      "1:1 Mentoring",
-                      "Career Guidance",
-                      "Workshops",
-                      "Skill Sessions",
-                      "Project Guidance",
-                      "Community Sessions",
-                      "Other",
-                    ].map((option) => (
+                    {contributionValues.map((option, index) => (
 
                       <label
                         key={option}
@@ -673,7 +576,7 @@ export default function BecomeAMentor() {
                         />
 
                         <span className="text-black/60">
-                          {option}
+                          {c.contributionLabels[index]}
                         </span>
 
                       </label>
@@ -684,7 +587,7 @@ export default function BecomeAMentor() {
 
                   {contributions.length === 0 && (
                     <p className="mt-2 text-xs text-black/35">
-                      Please select at least one option.
+                      {c.contributeRequired}
                     </p>
                   )}
 
@@ -696,10 +599,10 @@ export default function BecomeAMentor() {
                 <div>
 
                   <label className="mb-2 block text-sm font-medium text-black/70">
-                    Years of Experience
+                    {c.experience}
 
                     <span className="ml-2 text-xs font-normal text-black/30">
-                      Optional
+                      {f.optional}
                     </span>
 
                   </label>
@@ -711,28 +614,14 @@ export default function BecomeAMentor() {
                   >
 
                     <option value="">
-                      Select experience
+                      {c.experiencePlaceholder}
                     </option>
 
-                    <option value="0-1">
-                      Less than 1 year
-                    </option>
-
-                    <option value="1-3">
-                      1–3 years
-                    </option>
-
-                    <option value="3-5">
-                      3–5 years
-                    </option>
-
-                    <option value="5-10">
-                      5–10 years
-                    </option>
-
-                    <option value="10+">
-                      10+ years
-                    </option>
+                    {experienceValues.map((value, index) => (
+                      <option key={value} value={value}>
+                        {c.experienceLabels[index]}
+                      </option>
+                    ))}
 
                   </select>
 
@@ -744,10 +633,10 @@ export default function BecomeAMentor() {
                 <div>
 
                   <label className="mb-2 block text-sm font-medium text-black/70">
-                    Tell us about yourself
+                    {c.about}
 
                     <span className="ml-2 text-xs font-normal text-black/30">
-                      Optional
+                      {f.optional}
                     </span>
 
                   </label>
@@ -755,7 +644,7 @@ export default function BecomeAMentor() {
                   <textarea
                     name="about"
                     rows={5}
-                    placeholder="Anything else you'd like us to know about your journey, experience or interests..."
+                    placeholder={c.aboutPlaceholder}
                     className="w-full resize-none rounded-xl border border-black/10 bg-[#F8F6F1] px-4 py-3.5 text-sm leading-6 outline-none transition placeholder:text-black/30 focus:border-black/30"
                   />
 
@@ -767,10 +656,10 @@ export default function BecomeAMentor() {
                 <div>
 
                   <label className="mb-2 block text-sm font-medium text-black/70">
-                    LinkedIn / Portfolio
+                    {c.linkedin}
 
                     <span className="ml-2 text-xs font-normal text-black/30">
-                      Optional
+                      {f.optional}
                     </span>
 
                   </label>
@@ -800,9 +689,7 @@ export default function BecomeAMentor() {
                   >
 
                     <span>
-                      {isSubmitting
-                        ? "Submitting..."
-                        : "Submit Mentor Application"}
+                      {isSubmitting ? f.submitting : c.submit}
                     </span>
 
                     {!isSubmitting && (
@@ -814,7 +701,7 @@ export default function BecomeAMentor() {
                   </button>
 
                   <p className="mt-4 text-center text-xs leading-5 text-black/35">
-                    We'll review your application and get back to you.
+                    {c.submitNote}
                   </p>
 
                 </div>
@@ -845,7 +732,7 @@ export default function BecomeAMentor() {
             </div>
 
             <div className="mt-1 text-[9px] font-medium tracking-[0.25em] text-black/40">
-              LEARN • BUILD • BECOME
+              {t.nav.tagline}
             </div>
 
           </div>
@@ -854,7 +741,7 @@ export default function BecomeAMentor() {
             href="/"
             className="text-sm text-black/45 transition hover:text-black"
           >
-            Back to Nirmaan →
+            {f.backFooter}
           </a>
 
         </div>

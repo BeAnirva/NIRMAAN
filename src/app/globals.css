@@ -17,7 +17,31 @@ body {
   margin: 0;
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Arial, Helvetica, var(--font-devanagari), var(--font-odia), sans-serif;
+}
+
+/* HINDI & ODIA
+   The design uses wide letter-spacing and very tight line-heights,
+   which work for English but break Indic letter joins and clip the
+   vowel signs above/below the line. Relax both for these languages. */
+
+:lang(hi) *,
+:lang(or) * {
+  letter-spacing: normal !important;
+}
+
+:lang(hi) :is(h1, h2, h3),
+:lang(or) :is(h1, h2, h3) {
+  line-height: 1.3 !important;
+}
+
+/* Italic serif accents: Indic scripts have no true italics, so keep
+   the same font as the rest of the heading instead of a fake slant. */
+
+:lang(hi) .font-serif,
+:lang(or) .font-serif {
+  font-family: inherit;
+  font-style: normal;
 }
 
 a {
@@ -32,4 +56,11 @@ a {
 ::selection {
   background: #1d1d1b;
   color: #ffffff;
+}
+
+/* Translated headings run longer than English; let them wrap. */
+
+:lang(hi) .md\:whitespace-nowrap,
+:lang(or) .md\:whitespace-nowrap {
+  white-space: normal;
 }
